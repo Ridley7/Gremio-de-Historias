@@ -18,9 +18,21 @@ class MainMenu extends StatelessWidget {
             itemBuilder: (context, index){
               return Card(
                 margin: const EdgeInsets.all(64.0),
-                color: Colors.black12,
                 child: Center(
-                  child: Image.asset("assets/icons/collection_games.png")
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 200,
+                            child: Image.asset("assets/icons/collection_games.png", fit: BoxFit.fill,),
+                          )
+                        ],
+                      )
+                    ],
+                  )
                 ),
               );
             }
