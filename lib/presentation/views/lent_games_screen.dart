@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 
 class LentGamesScreen extends StatefulWidget {
   const LentGamesScreen({super.key});
@@ -76,6 +78,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
                         InkWell(
                           onTap: (){
                             //Hacemos cosas
+                            context.push(NavigationRoutes.BOARDGAME_DETAIL_ROUTE);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8.0),
