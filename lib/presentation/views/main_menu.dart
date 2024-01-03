@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/presentation/models/main_menu_screen/item_main_menu.dart';
 
 class MainMenu extends StatelessWidget {
   MainMenu({super.key});
 
-  final List<int> numbers = List.generate(100, (index) => index + 1);
-
+  final List<ItemMainMenu> mainMenu = [
+    ItemMainMenu(iconItem: "assets/icons/collection_games.png", titleItem: "Prestamo"),
+    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: "Mis Juegos"),
+    ItemMainMenu(iconItem: "assets/icons/iphone.png", titleItem: "iPhone"),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +18,7 @@ class MainMenu extends StatelessWidget {
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
             ),
-            itemCount: 3,
+            itemCount: mainMenu.length,
             itemBuilder: (context, index){
               return Card(
                 margin: const EdgeInsets.all(64.0),
@@ -27,8 +31,18 @@ class MainMenu extends StatelessWidget {
                         children: [
                           SizedBox(
                             width: 200,
-                            child: Image.asset("assets/icons/collection_games.png", fit: BoxFit.fill,),
+                            child: Image.asset(mainMenu[index].iconItem, fit: BoxFit.fill,),
                           )
+                        ],
+                      ),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(mainMenu[index].titleItem, style: const TextStyle(
+                            fontSize: 32,
+                            fontWeight: FontWeight.bold
+                          ),)
                         ],
                       )
                     ],
