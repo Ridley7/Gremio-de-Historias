@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/boardgame_detail.dart';
 import 'package:gremio_de_historias/presentation/views/main_menu_screen.dart';
@@ -25,7 +26,9 @@ final GoRouter router = GoRouter(
         routes: [
           GoRoute(
               path: NavigationRoutes._BOARDGAME_DETAIL_PATH,
-            builder: (context, state) => const BoardGameDetail()
+            builder: (context, state) => BoardGameDetail(
+              boardGame: state.extra as BoardGame,
+            )
           )
         ]
       ),

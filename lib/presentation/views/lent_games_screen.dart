@@ -12,18 +12,35 @@ class LentGamesScreen extends StatefulWidget {
 
 class _LentGamesScreenState extends State<LentGamesScreen> {
   final List<BoardGame> boardGames = [
-    BoardGame(name: "Ark Nova", taken: false, takenBy: ""),
-    BoardGame(name: "Caylus", taken: false, takenBy: ""),
-    BoardGame(name: "Agricola", taken: true, takenBy: "Luis"),
-    BoardGame(name: "Ark Nova", taken: false, takenBy: ""),
-    BoardGame(name: "Caylus", taken: false, takenBy: ""),
-    BoardGame(name: "Agricola", taken: true, takenBy: "Luis"),
-    BoardGame(name: "Ark Nova", taken: false, takenBy: ""),
-    BoardGame(name: "Caylus", taken: false, takenBy: ""),
-    BoardGame(name: "Agricola", taken: true, takenBy: "Luis"),
-    BoardGame(name: "Ark Nova", taken: false, takenBy: ""),
-    BoardGame(name: "Caylus", taken: false, takenBy: ""),
-    BoardGame(name: "Agricola", taken: true, takenBy: "Luis"),
+    BoardGame(
+        name: "Ark Nova",
+        taken: false, takenBy: "",
+        urlImage: "https://cf.geekdo-images.com/SoU8p28Sk1s8MSvoM4N8pQ__imagepage/img/qR1EvTSNPjDa-pNPGxU9HY2oKfs=/fit-in/900x600/filters:no_upscale():strip_icc()/pic6293412.jpg",
+        amountPlayers: "1-4 Jugadores",
+        age: "10+",
+        observations: "",
+      duration: "30 - 40 min"
+    ),
+    BoardGame(
+        name: "Caylus",
+        taken: false,
+        takenBy: "",
+        urlImage: "https://cf.geekdo-images.com/yC7nOSc1x5PT-oNnh6TEcQ__imagepage/img/HUgCfII8ZJf95tei5cBtSUIhRe0=/fit-in/900x600/filters:no_upscale():strip_icc()/pic1638795.jpg",
+        amountPlayers: "1-4 Jugadores",
+        age: "7+",
+        observations: "",
+      duration: "50 - 60 min"
+    ),
+    BoardGame(
+        name: "Agricola",
+        taken: true,
+        takenBy: "Luis",
+        urlImage: "https://cf.geekdo-images.com/Vf_0TrTfz9yll7rVBvYGsg__imagepage/img/lHic0OlwOos0xdDlNWdFpSmaFaI=/fit-in/900x600/filters:no_upscale():strip_icc()/pic3029377.jpg",
+        amountPlayers: "1-4 Jugadores",
+        age: "14+",
+        observations: "",
+      duration: "70 - 120 min"
+    )
   ];
 
   List<bool> checkedList = [];
@@ -78,7 +95,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
                         InkWell(
                           onTap: (){
                             //Hacemos cosas
-                            context.push(NavigationRoutes.BOARDGAME_DETAIL_ROUTE);
+                            context.push(NavigationRoutes.BOARDGAME_DETAIL_ROUTE, extra: boardGames[index]);
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(left: 8.0),
