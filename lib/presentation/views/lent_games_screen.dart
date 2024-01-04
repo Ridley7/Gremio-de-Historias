@@ -65,7 +65,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
         onPressed: (){
           //Hacemos cosas
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.handshake_outlined),
       ),
 
       body: ListView.builder(
