@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
 
 class LentGamesScreen extends StatefulWidget {
   const LentGamesScreen({super.key});
@@ -86,7 +88,14 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
         onPressed: () async{
           //Comprobamos si podemos hacer el prestamo
           await _selectDate(context);
-          print("Seguimos ejecuttando");
+          print("Dia elegido: $selectedDate.day");
+
+          //Una vez se ha validado el dia elegido, se inserta el dia en bd
+          //Una vez se haya hecho la inserción mostramos mensaje
+          LoadingView.show(context);
+          await Future.delayed(Duration(seconds: 3));
+          LoadingView.hide();
+          InfoView.show(context, "Juego retirado correctamente");
         },
         child: const Icon(Icons.handshake_outlined),
       ),
