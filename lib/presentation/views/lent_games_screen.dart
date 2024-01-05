@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
@@ -45,6 +47,25 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
 
   List<bool> checkedList = [];
 
+  DateTime selectedDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async{
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        locale: const Locale("es", "ES"),
+        helpText: "Seleccione la fecha de devolución",
+        initialDate: selectedDate,
+        firstDate: selectedDate.subtract(const Duration(days: 30)),
+        lastDate: selectedDate.add(const Duration(days: 30))
+    );
+
+    if(picked != null && picked != selectedDate){
+      setState(() {
+        selectedDate = picked!;
+      });
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -62,8 +83,10 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       ),
       
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          //Hacemos cosas
+        onPressed: () async{
+          //Comprobamos si podemos hacer el prestamo
+          await _selectDate(context);
+          print("Seguimos ejecuttando");
         },
         child: const Icon(Icons.handshake_outlined),
       ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'presentation/navigation/navigation_routes.dart';
 
 void main() {
@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       routerConfig: router,
       title: 'Flutter Demo',
+      localizationsDelegates: const[
+        GlobalMaterialLocalizations.delegate
+      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
