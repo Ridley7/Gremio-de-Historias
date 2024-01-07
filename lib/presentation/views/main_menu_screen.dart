@@ -7,7 +7,7 @@ class MainMenuScreen extends StatelessWidget {
 
   final List<ItemMainMenu> mainMenu = [
     ItemMainMenu(iconItem: "assets/icons/collection_games.png", titleItem: "Prestamo", route: "/lent"),
-    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: "Mis Juegos", route: "/lent"),
+    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: "Mis Juegos", route: "/owngames"),
     ItemMainMenu(iconItem: "assets/icons/iphone.png", titleItem: "iPhone", route: "/lent"),
   ];
 
@@ -56,7 +56,6 @@ class MainMenuScreen extends StatelessWidget {
                 ),
               );
             }
-
         ),
       ),
     );
