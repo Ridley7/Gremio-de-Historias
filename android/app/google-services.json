@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "155722521233",
+    "project_id": "ludoteca-3be1e",
+    "storage_bucket": "ludoteca-3be1e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:155722521233:android:488babbaad29a14ac9bd30",
+        "android_client_info": {
+          "package_name": "com.example.gremio_de_historias"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTxXf4ZbUGtn77TsLvRoaFtRI16p1SyxE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
