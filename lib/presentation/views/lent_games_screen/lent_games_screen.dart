@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gremio_de_historias/domain/boardgames_repository.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
@@ -15,7 +16,8 @@ class LentGamesScreen extends StatefulWidget {
 }
 
 class _LentGamesScreenState extends State<LentGamesScreen> {
-  final List<BoardGame> boardGames = [
+  List<BoardGame> boardGames = [
+    /*
     BoardGame(
         name: "Ark Nova",
         taken: false, takenBy: "",
@@ -45,6 +47,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
         observations: "",
       duration: "70 - 120 min"
     )
+     */
   ];
 
   List<bool> checkedList = [];
@@ -68,13 +71,24 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
     }
   }
 
+  BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+  List<BoardGame> games = [];
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    checkedList = List.generate(boardGames.length, (index) => false);
+    _getBoardGames();
+    //checkedList = List.generate(boardGames.length, (index) => false);
   }
 
+  void _getBoardGames() async{
+    boardGames = await _boardgamesRepository.getBoardGames();
+    checkedList = List.generate(boardGames.length, (index) => false);
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

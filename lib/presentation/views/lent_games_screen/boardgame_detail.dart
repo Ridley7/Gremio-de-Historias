@@ -43,7 +43,7 @@ class BoardGameDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(boardGame.amountPlayers, style: const TextStyle(fontSize: 24),),
+                Text("${boardGame.amountPlayers} Jugadores ", style: const TextStyle(fontSize: 24),),
               ],
             ),
 
@@ -69,7 +69,9 @@ class BoardGameDetail extends StatelessWidget {
 
             const Row(
               children: [
-                Text("Observaciones: ", style: TextStyle(fontSize: 24),),
+                Text("Observaciones: ",
+                  style: TextStyle(fontSize: 24),
+                ),
               ],
             ),
 
@@ -77,9 +79,13 @@ class BoardGameDetail extends StatelessWidget {
               height: 8.0,
             ),
 
-            Wrap(
+            Row(
               children: [
-                Text(boardGame.observations, style: const TextStyle(fontSize: 20),),
+                Wrap(
+                  children: [
+                    Text(boardGame.observations, textAlign: TextAlign.start, style: const TextStyle(fontSize: 20),),
+                  ],
+                ),
               ],
             ),
 

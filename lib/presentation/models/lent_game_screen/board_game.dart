@@ -18,4 +18,17 @@ class BoardGame{
     required this.observations,
     required this.duration
   });
+
+  factory BoardGame.fromJson(Map<String, dynamic> json) {
+    return BoardGame(
+        name: json["name"],
+        taken: json["taken"],
+        takenBy: json["takenBy"],
+        urlImage: json["urlImage"],
+        amountPlayers: json["amountPlayers"],
+        age: json["age"],
+        observations: json["observations"],
+        duration: json["duration"]
+    );
+  }
 }
