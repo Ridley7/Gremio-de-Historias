@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
 
 class OwnGamesScreen extends StatefulWidget {
   const OwnGamesScreen({super.key});
@@ -63,7 +64,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
                 child: InkWell(
                   onTap: (){
                     //Aqui sacamos modal para devolver juego
-
+                    InfoView.show(context, "¿Seguro que deseas devolver este juego?");
                   },
                   child: Center(
                       child: Column(
