@@ -11,7 +11,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _contollerNameMember = TextEditingController();
+  final TextEditingController _controllerNameMember = TextEditingController();
+  final TextEditingController _controllerPassMember = TextEditingController();
+  bool viewPassword = true;
 
   @override
   Widget build(BuildContext context) {
@@ -26,39 +28,115 @@ class _LoginScreenState extends State<LoginScreen> {
 
             const Text("Asociación cultural", style: TextStyle(fontSize: 20),),
 
+            const SizedBox(
+              height: 8,
+            ),
+
             Form(
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormField(
-                    controller: _contollerNameMember,
-                    decoration: const InputDecoration(
-                      prefixIcon: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: FaIcon(FontAwesomeIcons.user),
-                      ),
-                      hintText: "Hint text",
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(0)
+                  //Input para el nombre de usuario
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: TextFormField(
+                      controller: _controllerNameMember,
+                      decoration: const InputDecoration(
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: FaIcon(FontAwesomeIcons.user),
                         ),
-                        borderSide: BorderSide(color: Colors.black54)
-                      )
+                        hintText: "Nombre de usuario",
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(0)
+                          ),
+                          borderSide: BorderSide(color: Colors.black54)
+                        )
+                      ),
+
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return "Campo obligatorio";
+                        }
+
+                        return null;
+                      },
                     ),
+                  ),
 
-                    validator: (value){
-                      if(value!.isEmpty){
-                        return "Campo obligatorio";
-                      }
+                  const SizedBox(
+                    height: 16,
+                  ),
 
-                      return null;
-                    },
-                  )
+                  //Input para la contraseña
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                    child: TextFormField(
+                      obscureText: viewPassword,
+                      controller: _controllerPassMember,
+                      decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: IconButton(
+                               onPressed: (){
+                                 setState(() {
+                                   viewPassword = !viewPassword;
+                                 });
+                               },
+                                icon: const FaIcon(FontAwesomeIcons.key),
+                            ),
+                          ),
+                          hintText: "Contraseña",
+                          enabledBorder: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(0)
+                              ),
+                              borderSide: BorderSide(color: Colors.black54)
+                          )
+                      ),
+
+                      validator: (value){
+                        if(value!.isEmpty){
+                          return "Campo obligatorio";
+                        }
+
+                        return null;
+                      },
+                    ),
+                  ),
+
+
+
+
                 ],
               ),
+            ),
+
+            const SizedBox(
+              height: 128,
+            ),
+
+
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.85,
+              height: MediaQuery.of(context).size.height * 0.07,
+              child: ElevatedButton(
+                  onPressed: (){},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black87,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(2)
+                    )
+                  ),
+                  child: const Text(
+                   "Login",
+                   style: TextStyle(
+                     color: Colors.white, fontSize: 20
+                   ),
+                  )
+              ),
             )
-
-
           ],
         ),
       ),
