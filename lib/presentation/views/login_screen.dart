@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:gremio_de_historias/domain/members_repository.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +15,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controllerNameMember = TextEditingController();
   final TextEditingController _controllerPassMember = TextEditingController();
   bool viewPassword = true;
+  
+  MembersRepository _membersRepository = MembersRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +125,12 @@ class _LoginScreenState extends State<LoginScreen> {
               width: MediaQuery.of(context).size.width * 0.85,
               height: MediaQuery.of(context).size.height * 0.07,
               child: ElevatedButton(
-                  onPressed: (){},
+                  onPressed: (){
+
+                    //Aqui tenemos que hacer toda la movida del logueo.
+                    _membersRepository.loginMember(_controllerNameMember.text, _controllerPassMember.text);
+
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black87,
                     shape: RoundedRectangleBorder(
