@@ -2,7 +2,7 @@ import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/lent_games_screen.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/boardgame_detail.dart';
-import 'package:gremio_de_historias/presentation/views/login_screen.dart';
+import 'package:gremio_de_historias/presentation/views/login_screen/login_screen.dart';
 import 'package:gremio_de_historias/presentation/views/main_menu_screen.dart';
 import 'package:gremio_de_historias/presentation/views/own_games_screen.dart';
 

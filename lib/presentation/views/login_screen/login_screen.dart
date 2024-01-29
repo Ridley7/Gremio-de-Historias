@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gremio_de_historias/domain/members_repository.dart';
+import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -121,14 +122,21 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
 
 
+
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.85,
               height: MediaQuery.of(context).size.height * 0.07,
               child: ElevatedButton(
-                  onPressed: (){
+                  onPressed: () async {
 
                     //Aqui tenemos que hacer toda la movida del logueo.
-                    _membersRepository.loginMember(_controllerNameMember.text, _controllerPassMember.text);
+                    Member? miembro = await _membersRepository.loginMember(_controllerNameMember.text, _controllerPassMember.text);
+
+                    if(miembro == null){
+                      print("LIADA");
+                    }else{
+                      print("ENTRANDO");
+                    }
 
                   },
                   style: ElevatedButton.styleFrom(
