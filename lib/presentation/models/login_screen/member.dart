@@ -1,19 +1,19 @@
 class Member{
   String name;
   String password;
-  String role;
+  int level_access;
 
   Member({
     required this.name,
     required this.password,
-    required this.role
+    required this.level_access
   });
 
   factory Member.fromJson(Map<String, dynamic> json){
     return Member(
         name: json["name"],
         password: json["password"],
-        role: json["role"]
+        level_access: json["level_access"]
     );
   }
 }

@@ -100,6 +100,8 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
+          //AQUI HACEMOS TODA LA MOVIDA DE PRESTAR JUEGOS
+
           //Comprobamos si podemos hacer el prestamo
           await _selectDate(context);
           print("Dia elegido: $selectedDate.day");

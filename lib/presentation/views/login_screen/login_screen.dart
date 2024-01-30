@@ -3,9 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
+import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/login_screen/viewmodel/login_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -53,6 +55,10 @@ class _LoginScreenState extends State<LoginScreen> {
               );
 
             }else{
+              //Llamamos al provider para pasar la informacion del miembro
+              final memberProvider = context.read<MemberProvider>();
+              memberProvider.setCurrentMember(miembro!);
+
               //Aqui vamos al menu principal
               context.push("/mainmenu");
               //context.push(mainMenu[index].route);
