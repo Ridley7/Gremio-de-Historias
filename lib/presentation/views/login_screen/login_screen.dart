@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:gremio_de_historias/domain/members_repository.dart';
+import 'package:go_router/go_router.dart';
+import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
+import 'package:gremio_de_historias/presentation/views/login_screen/viewmodel/login_view_model.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -16,8 +20,55 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controllerNameMember = TextEditingController();
   final TextEditingController _controllerPassMember = TextEditingController();
   bool viewPassword = true;
+  Member? miembro;
   
-  MembersRepository _membersRepository = MembersRepository();
+  //MembersRepository _membersRepository = MembersRepository();
+  //final LoginViewModel _loginViewModel = LoginViewModel(membersRepository: _membersRepository);
+  final LoginViewModel _loginViewModel = LoginViewModel();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _loginViewModel.loginMemberState.stream.listen((state) {
+      switch(state.status){
+        case Status.LOADING:
+          LoadingView.show(context);
+          break;
+        case Status.SUCCESS:
+          LoadingView.hide();
+          setState(() {
+            //Pasan cosas
+            miembro = state.data;
+
+            if(miembro == null){
+
+              //Mostramos snackbar
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                    content: Text("Credenciales incorrectas"),
+                    duration: Duration(seconds: 3),
+                )
+              );
+
+            }else{
+              //Aqui vamos al menu principal
+              context.push("/mainmenu");
+              //context.push(mainMenu[index].route);
+
+            }
+          });
+          break;
+        case Status.ERROR:
+          LoadingView.hide();
+          ErrorView.show(context, state.exception!.toString(), (){
+            print("Estas en el Retry");
+          });
+      }
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,6 +180,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ElevatedButton(
                   onPressed: () async {
 
+                    /*
                     //Aqui tenemos que hacer toda la movida del logueo.
                     Member? miembro = await _membersRepository.loginMember(_controllerNameMember.text, _controllerPassMember.text);
 
@@ -137,6 +189,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     }else{
                       print("ENTRANDO");
                     }
+                     */
+
+                    _loginViewModel.performLoginMember(_controllerNameMember.text, _controllerPassMember.text);
+
 
                   },
                   style: ElevatedButton.styleFrom(

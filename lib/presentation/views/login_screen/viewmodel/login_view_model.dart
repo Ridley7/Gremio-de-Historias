@@ -7,12 +7,15 @@ import 'package:gremio_de_historias/presentation/models/login_screen/member.dart
 
 class LoginViewModel extends BaseViewModel{
 
-  final MembersRepository _membersRepository;
+  final MembersRepository _membersRepository = MembersRepository();
   final StreamController<ResourceState<Member>> loginMemberState = StreamController();
 
+  /*
   LoginViewModel({
     required MembersRepository membersRepository
   }) : _membersRepository = membersRepository;
+
+   */
 
   performLoginMember(String name, String pass){
     loginMemberState.add(ResourceState.loading());
