@@ -104,14 +104,42 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
 
           //Comprobamos si podemos hacer el prestamo
           await _selectDate(context);
-          print("Dia elegido: $selectedDate.day");
 
-          //Una vez se ha validado el dia elegido, se inserta el dia en bd
-          //Una vez se haya hecho la inserción mostramos mensaje
-          LoadingView.show(context);
-          await Future.delayed(Duration(seconds: 3));
-          LoadingView.hide();
-          InfoView.show(context, "Juego retirado correctamente");
+          //Comprobamos si el dia elegido de devolucion no supera el mes
+          int daysAllowed = selectedDate.difference(DateTime.now()).inDays;
+          if(daysAllowed > 15){
+            InfoView.show(context, "La fecha de prestamos no puede exceder los 15 dias");
+          }else{
+            //Obtenemos los juegos que se van a prestar
+            //Para ello obtenemos todos los indices a true de checkedList
+            List<int> indexBoardgamesBorrowed = List.generate(
+                checkedList.length, (index) => index).where((i) => checkedList[i]).toList();
+
+            //Una vez obtenidos los indices obtenemos la informacion de cada juego
+            List<BoardGame> boardgamesBorrowed = [];
+            indexBoardgamesBorrowed.forEach((element) {
+               boardgamesBorrowed.add(boardGames[element]);
+            });
+
+            //Con la informacion de los juegos obtenidos comprobamos que no se puedan
+            //retirar una alta cantidad de juegos
+            if(boardgamesBorrowed.length > 5){
+              InfoView.show(context, "No puedes retirar más de 5 juegos");
+            }
+            else{
+
+              //Si el usuario ha retirado 5 o menos juegos procedemos a actualizar la BD
+              await _boardgamesRepository.setBorrowedGames(boardgamesBorrowed);
+
+              //Una vez se haya hecho la inserción mostramos mensaje
+              LoadingView.show(context);
+              await Future.delayed(Duration(seconds: 3));
+              LoadingView.hide();
+              InfoView.show(context, "Juego retirado correctamente");
+            }
+          }
+
+
         },
         child: const Icon(Icons.handshake_outlined),
       ),

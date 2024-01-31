@@ -1,4 +1,5 @@
 class BoardGame{
+  //String id;
   String name;
   bool taken;
   String takenBy;
@@ -9,6 +10,7 @@ class BoardGame{
   String duration;
 
   BoardGame({
+    //required this.id,
     required this.name,
     required this.taken,
     required this.takenBy,
@@ -21,6 +23,7 @@ class BoardGame{
 
   factory BoardGame.fromJson(Map<String, dynamic> json) {
     return BoardGame(
+     // id: json["id"],
         name: json["name"],
         taken: json["taken"],
         takenBy: json["takenBy"],
