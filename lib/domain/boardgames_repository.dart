@@ -1,7 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 
 class BoardgamesRepository{
+
+  //Metodo para devolver un juego
+  Future<void> returnBorrowedGame(BoardGame boardGame) async{
+   FirebaseFirestore db = FirebaseFirestore.instance;
+   await db.collection("boardgames").doc(boardGame.id).set(boardGame.toJson());
+  }
 
   //Metodo para obtener los juegos que tengo prestados
   Future<List<BoardGame>> getBorrowedBoardGames(String memberName) async{

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/domain/boardgames_repository.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
-import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/dialog_view.dart';
 import 'package:provider/provider.dart';
 
 class OwnGamesScreen extends StatefulWidget {
@@ -92,7 +92,12 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
                 child: InkWell(
                   onTap: (){
                     //Aqui sacamos modal para devolver juego
-                    InfoView.show(context, "¿Seguro que deseas devolver este juego?");
+                    DialogView.show(context, "¿Seguro que deseas devolver este juego?", (){
+                      boardGames[index].takenBy = "";
+                      boardGames[index].taken = false;
+                      _boardgamesRepository.returnBorrowedGame(boardGames[index]);
+                      _getBorrowedGames();
+                    });
                   },
                   child: Center(
                       child: Column(
