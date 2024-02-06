@@ -7,16 +7,28 @@ class BoardgamesRepository{
   Future<void> setBorrowedGames(List<BoardGame> borrowedGames) async{
     FirebaseFirestore db = FirebaseFirestore.instance;
 
-    //ME FALTA EL ID DEL DOCUMENTO QUE SE TIENE QUE AÑADIR EN EL METODO DE ABAJO
-
+    borrowedGames.forEach((boardgame) async {
+      await db.collection("boardgames").doc(boardgame.id).set(boardgame.toJson());
+    });
   }
 
   //Metodo para obtener todos los juegos de mesa de la BD
   Future<List<BoardGame>> getBoardGames() async{
     FirebaseFirestore db = FirebaseFirestore.instance;
-    final data = await db.collection("boardgames").get();
+    List<BoardGame> boardgames = [];
 
-    List<BoardGame> boardgames = data.docs.map((boardgame) => BoardGame.fromJson(boardgame.data())).toList();
+    QuerySnapshot querySnapshot = await db.collection("boardgames").get();
+    querySnapshot.docs.forEach((element) {
+      //Obtenemos el mapa de los datos
+      Map<String, dynamic> data_boardgames = element.data() as Map<String, dynamic>;
+
+      //Añadimos el id del documento
+      data_boardgames["id"] = element.id;
+
+      //Añadimos el juego a la coleccion de juegos de mesa
+      boardgames.add(BoardGame.fromJson(data_boardgames));
+    });
+
     return boardgames;
   }
 

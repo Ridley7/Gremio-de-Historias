@@ -1,12 +1,13 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/domain/boardgames_repository.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
+import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
+import 'package:provider/provider.dart';
 
 class LentGamesScreen extends StatefulWidget {
   const LentGamesScreen({super.key});
@@ -71,7 +72,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
     }
   }
 
-  BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+  final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
   List<BoardGame> games = [];
 
   @override
@@ -79,7 +80,6 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
     // TODO: implement initState
     super.initState();
     _getBoardGames();
-    //checkedList = List.generate(boardGames.length, (index) => false);
   }
 
   void _getBoardGames() async{
@@ -115,9 +115,14 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
             List<int> indexBoardgamesBorrowed = List.generate(
                 checkedList.length, (index) => index).where((i) => checkedList[i]).toList();
 
-            //Una vez obtenidos los indices obtenemos la informacion de cada juego
+            //Una vez obtenidos los indices, seteamos la informacion de cada juego
             List<BoardGame> boardgamesBorrowed = [];
             indexBoardgamesBorrowed.forEach((element) {
+              //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
+              //Llamamos al provider para obtener la información del usuario
+              final memberProvider = context.read<MemberProvider>();
+              boardGames[element].takenBy = memberProvider.getCurrentMember().name;
+              boardGames[element].taken = true;
                boardgamesBorrowed.add(boardGames[element]);
             });
 
@@ -133,9 +138,11 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
 
               //Una vez se haya hecho la inserción mostramos mensaje
               LoadingView.show(context);
-              await Future.delayed(Duration(seconds: 3));
+              await Future.delayed(Duration(seconds: 2));
               LoadingView.hide();
               InfoView.show(context, "Juego retirado correctamente");
+
+              _getBoardGames();
             }
           }
 

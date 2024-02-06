@@ -14,6 +14,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
 
   final List<BoardGame> boardGames = [
     BoardGame(
+      id: "uno",
         name: "Ark Nova",
         taken: false, takenBy: "",
         urlImage: "https://cf.geekdo-images.com/SoU8p28Sk1s8MSvoM4N8pQ__imagepage/img/qR1EvTSNPjDa-pNPGxU9HY2oKfs=/fit-in/900x600/filters:no_upscale():strip_icc()/pic6293412.jpg",
@@ -23,6 +24,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
         duration: "30 - 40 min"
     ),
     BoardGame(
+      id: "dos",
         name: "Caylus",
         taken: false,
         takenBy: "",
@@ -33,6 +35,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
         duration: "50 - 60 min"
     ),
     BoardGame(
+      id: "tres",
         name: "Agricola",
         taken: true,
         takenBy: "Luis",
