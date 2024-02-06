@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/domain/boardgames_repository.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
+import 'package:provider/provider.dart';
 
 class OwnGamesScreen extends StatefulWidget {
   const OwnGamesScreen({super.key});
@@ -12,7 +15,8 @@ class OwnGamesScreen extends StatefulWidget {
 
 class _OwnGamesScreenState extends State<OwnGamesScreen> {
 
-  final List<BoardGame> boardGames = [
+  List<BoardGame> boardGames = [
+    /*
     BoardGame(
       id: "uno",
         name: "Ark Nova",
@@ -45,8 +49,29 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
         observations: "",
         duration: "70 - 120 min"
     )
+
+     */
   ];
 
+
+  final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _getBorrowedGames();
+  }
+
+  void _getBorrowedGames() async{
+    //Necesito el provider
+    final memberProvider = context.read<MemberProvider>();
+    boardGames = await _boardgamesRepository.getBorrowedBoardGames(memberProvider.currentMember.name);
+
+    setState(() {
+
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

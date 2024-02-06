@@ -185,20 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: MediaQuery.of(context).size.height * 0.07,
               child: ElevatedButton(
                   onPressed: () async {
-
-                    /*
-                    //Aqui tenemos que hacer toda la movida del logueo.
-                    Member? miembro = await _membersRepository.loginMember(_controllerNameMember.text, _controllerPassMember.text);
-
-                    if(miembro == null){
-                      print("LIADA");
-                    }else{
-                      print("ENTRANDO");
-                    }
-                     */
-
                     _loginViewModel.performLoginMember(_controllerNameMember.text, _controllerPassMember.text);
-
 
                   },
                   style: ElevatedButton.styleFrom(

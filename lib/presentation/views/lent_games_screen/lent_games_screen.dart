@@ -73,7 +73,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
   }
 
   final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
-  List<BoardGame> games = [];
+
 
   @override
   void initState() {
@@ -85,9 +85,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
   void _getBoardGames() async{
     boardGames = await _boardgamesRepository.getBoardGames();
     checkedList = List.generate(boardGames.length, (index) => false);
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
