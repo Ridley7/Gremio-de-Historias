@@ -15,44 +15,7 @@ class OwnGamesScreen extends StatefulWidget {
 
 class _OwnGamesScreenState extends State<OwnGamesScreen> {
 
-  List<BoardGame> boardGames = [
-    /*
-    BoardGame(
-      id: "uno",
-        name: "Ark Nova",
-        taken: false, takenBy: "",
-        urlImage: "https://cf.geekdo-images.com/SoU8p28Sk1s8MSvoM4N8pQ__imagepage/img/qR1EvTSNPjDa-pNPGxU9HY2oKfs=/fit-in/900x600/filters:no_upscale():strip_icc()/pic6293412.jpg",
-        amountPlayers: "1-4 Jugadores",
-        age: "10+",
-        observations: "",
-        duration: "30 - 40 min"
-    ),
-    BoardGame(
-      id: "dos",
-        name: "Caylus",
-        taken: false,
-        takenBy: "",
-        urlImage: "https://cf.geekdo-images.com/yC7nOSc1x5PT-oNnh6TEcQ__imagepage/img/HUgCfII8ZJf95tei5cBtSUIhRe0=/fit-in/900x600/filters:no_upscale():strip_icc()/pic1638795.jpg",
-        amountPlayers: "1-4 Jugadores",
-        age: "7+",
-        observations: "",
-        duration: "50 - 60 min"
-    ),
-    BoardGame(
-      id: "tres",
-        name: "Agricola",
-        taken: true,
-        takenBy: "Luis",
-        urlImage: "https://cf.geekdo-images.com/Vf_0TrTfz9yll7rVBvYGsg__imagepage/img/lHic0OlwOos0xdDlNWdFpSmaFaI=/fit-in/900x600/filters:no_upscale():strip_icc()/pic3029377.jpg",
-        amountPlayers: "1-4 Jugadores",
-        age: "14+",
-        observations: "",
-        duration: "70 - 120 min"
-    )
-
-     */
-  ];
-
+  List<BoardGame> boardGames = [];
 
   final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
 
@@ -67,10 +30,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
     //Necesito el provider
     final memberProvider = context.read<MemberProvider>();
     boardGames = await _boardgamesRepository.getBorrowedBoardGames(memberProvider.currentMember.name);
-
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
-import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 
 class BoardgamesRepository{
 

@@ -18,51 +18,21 @@ class LentGamesScreen extends StatefulWidget {
 
 class _LentGamesScreenState extends State<LentGamesScreen> {
   List<BoardGame> boardGames = [
-    /*
-    BoardGame(
-        name: "Ark Nova",
-        taken: false, takenBy: "",
-        urlImage: "https://cf.geekdo-images.com/SoU8p28Sk1s8MSvoM4N8pQ__imagepage/img/qR1EvTSNPjDa-pNPGxU9HY2oKfs=/fit-in/900x600/filters:no_upscale():strip_icc()/pic6293412.jpg",
-        amountPlayers: "1-4 Jugadores",
-        age: "10+",
-        observations: "",
-      duration: "30 - 40 min"
-    ),
-    BoardGame(
-        name: "Caylus",
-        taken: false,
-        takenBy: "",
-        urlImage: "https://cf.geekdo-images.com/yC7nOSc1x5PT-oNnh6TEcQ__imagepage/img/HUgCfII8ZJf95tei5cBtSUIhRe0=/fit-in/900x600/filters:no_upscale():strip_icc()/pic1638795.jpg",
-        amountPlayers: "1-4 Jugadores",
-        age: "7+",
-        observations: "",
-      duration: "50 - 60 min"
-    ),
-    BoardGame(
-        name: "Agricola",
-        taken: true,
-        takenBy: "Luis",
-        urlImage: "https://cf.geekdo-images.com/Vf_0TrTfz9yll7rVBvYGsg__imagepage/img/lHic0OlwOos0xdDlNWdFpSmaFaI=/fit-in/900x600/filters:no_upscale():strip_icc()/pic3029377.jpg",
-        amountPlayers: "1-4 Jugadores",
-        age: "14+",
-        observations: "",
-      duration: "70 - 120 min"
-    )
-     */
   ];
 
   List<bool> checkedList = [];
 
-  DateTime selectedDate = DateTime.now();
+  DateTime? selectedDate;
 
   Future<void> _selectDate(BuildContext context) async{
     final DateTime? picked = await showDatePicker(
         context: context,
         locale: const Locale("es", "ES"),
         helpText: "Seleccione la fecha de devolución",
-        initialDate: selectedDate,
-        firstDate: selectedDate.subtract(const Duration(days: 30)),
-        lastDate: selectedDate.add(const Duration(days: 30))
+        //initialDate: selectedDate,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now().subtract(const Duration(days: 30)),
+        lastDate: DateTime.now().add(const Duration(days: 30))
     );
 
     if(picked != null && picked != selectedDate){
@@ -98,13 +68,30 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
-          //AQUI HACEMOS TODA LA MOVIDA DE PRESTAR JUEGOS
+
+          //Si no hemos elegido ningun juego no hacemos nada
+          bool findedGame = false;
+          for(int i = 0, max = checkedList.length; i < max; i++){
+            if(checkedList[i]){
+              findedGame = true;
+              break;
+            }
+          }
+
+          if(!findedGame){
+            InfoView.show(context, "Elija al menos un juego");
+            return;
+          }
+
 
           //Comprobamos si podemos hacer el prestamo
           await _selectDate(context);
 
+          //Si no hemos elegido fecha no hacemos nada
+          if(selectedDate == null){ return; }
+
           //Comprobamos si el dia elegido de devolucion no supera el mes
-          int daysAllowed = selectedDate.difference(DateTime.now()).inDays;
+          int daysAllowed = selectedDate!.difference(DateTime.now()).inDays;
           if(daysAllowed > 15){
             InfoView.show(context, "La fecha de prestamos no puede exceder los 15 dias");
           }else{
@@ -113,38 +100,47 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
             List<int> indexBoardgamesBorrowed = List.generate(
                 checkedList.length, (index) => index).where((i) => checkedList[i]).toList();
 
-            //Una vez obtenidos los indices, seteamos la informacion de cada juego
-            List<BoardGame> boardgamesBorrowed = [];
-            indexBoardgamesBorrowed.forEach((element) {
-              //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
-              //Llamamos al provider para obtener la información del usuario
-              final memberProvider = context.read<MemberProvider>();
-              boardGames[element].takenBy = memberProvider.getCurrentMember().name;
-              boardGames[element].taken = true;
-               boardgamesBorrowed.add(boardGames[element]);
-            });
-
-            //Con la informacion de los juegos obtenidos comprobamos que no se puedan
-            //retirar una alta cantidad de juegos
-            if(boardgamesBorrowed.length > 5){
-              InfoView.show(context, "No puedes retirar más de 5 juegos");
+            //Ahora comprobamos que el usuario no pueda llevarse mas juegos de los que le corresponde
+            if(indexBoardgamesBorrowed.length > 1){
+              InfoView.show(context, "No puedes retirar más de 1 juego");
             }
             else{
 
-              //Si el usuario ha retirado 5 o menos juegos procedemos a actualizar la BD
-              await _boardgamesRepository.setBorrowedGames(boardgamesBorrowed);
+              //Ahora comprobamos la cantidad de juegos que va a retirar más los que ya tiene en su poder
+              //La cantidad de juegos que voy a retirar estan en indexBoardgamesBorrowed.length
+              //Y ahora obtengo los que tengo en mi poder
+              final memberProvider = context.read<MemberProvider>();
+              List<BoardGame> listGamesInMyHouse = await _boardgamesRepository.getBorrowedBoardGames(memberProvider.currentMember.name);
 
-              //Una vez se haya hecho la inserción mostramos mensaje
-              LoadingView.show(context);
-              await Future.delayed(Duration(seconds: 2));
-              LoadingView.hide();
-              InfoView.show(context, "Juego retirado correctamente");
+              if(indexBoardgamesBorrowed.length + listGamesInMyHouse.length > 1){
+                InfoView.show(context, "No puedes tener más de 1 juego en tu poder");
+              }else{
+                //Una vez obtenidos los indices, seteamos la informacion de cada juego
+                List<BoardGame> boardgamesBorrowed = [];
+                indexBoardgamesBorrowed.forEach((element) {
+                  //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
+                  //Llamamos al provider para obtener la información del usuario
+                  final memberProvider = context.read<MemberProvider>();
+                  boardGames[element].takenBy = memberProvider.getCurrentMember().name;
+                  boardGames[element].taken = true;
+                  boardgamesBorrowed.add(boardGames[element]);
+                });
 
-              _getBoardGames();
+                //Aqui debemos comprobar cuantos juegos prestados tengo
+
+                //Si el usuario ha retirado 5 o menos juegos procedemos a actualizar la BD
+                await _boardgamesRepository.setBorrowedGames(boardgamesBorrowed);
+
+                //Una vez se haya hecho la inserción mostramos mensaje
+                LoadingView.show(context);
+                await Future.delayed(Duration(seconds: 2));
+                LoadingView.hide();
+                InfoView.show(context, "Juego retirado correctamente");
+
+                _getBoardGames();
+              }
             }
           }
-
-
         },
         child: const Icon(Icons.handshake_outlined),
       ),
