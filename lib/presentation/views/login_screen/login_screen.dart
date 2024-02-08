@@ -65,8 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
               _saveCredentials(miembro!.name, miembro!.password);
 
               //Aqui vamos al menu principal
-              context.push("/mainmenu");
-              //context.push(mainMenu[index].route);
+              context.go("/mainmenu");
 
             }
           });
@@ -83,22 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _loadCredentials();
   }
   
-  void _saveCredentials(String userName, String pass) async{
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    preferences.setString("usernamePreferences", userName);
-    preferences.setString("passPreferences", pass);
-  }
 
-  void _loadCredentials() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    usernamePreferences = preferences.getString("usernamePreferences") ?? "";
-    passPreferences = preferences.getString("passPreferences") ?? "";
-
-    if(usernamePreferences != "" && passPreferences != ""){
-      //Hacemos login
-      _loginViewModel.performLoginMember(usernamePreferences, passPreferences);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,9 +175,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
 
-
-
-
                 ],
               ),
             ),
@@ -201,8 +182,6 @@ class _LoginScreenState extends State<LoginScreen> {
             const SizedBox(
               height: 128,
             ),
-
-
 
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.85,
@@ -230,5 +209,22 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  void _saveCredentials(String userName, String pass) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("usernamePreferences", userName);
+    preferences.setString("passPreferences", pass);
+  }
+
+  void _loadCredentials() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    usernamePreferences = preferences.getString("usernamePreferences") ?? "";
+    passPreferences = preferences.getString("passPreferences") ?? "";
+
+    if(usernamePreferences != "" && passPreferences != ""){
+      //Hacemos login
+      _loginViewModel.performLoginMember(usernamePreferences, passPreferences);
+    }
   }
 }
