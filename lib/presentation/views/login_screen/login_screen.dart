@@ -8,6 +8,7 @@ import 'package:gremio_de_historias/presentation/views/login_screen/viewmodel/lo
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,6 +28,8 @@ class _LoginScreenState extends State<LoginScreen> {
   //MembersRepository _membersRepository = MembersRepository();
   //final LoginViewModel _loginViewModel = LoginViewModel(membersRepository: _membersRepository);
   final LoginViewModel _loginViewModel = LoginViewModel();
+  String usernamePreferences = "";
+  String passPreferences = "";
 
   @override
   void initState() {
@@ -41,7 +44,6 @@ class _LoginScreenState extends State<LoginScreen> {
         case Status.SUCCESS:
           LoadingView.hide();
           setState(() {
-            //Pasan cosas
             miembro = state.data;
 
             if(miembro == null){
@@ -58,6 +60,9 @@ class _LoginScreenState extends State<LoginScreen> {
               //Llamamos al provider para pasar la informacion del miembro
               final memberProvider = context.read<MemberProvider>();
               memberProvider.setCurrentMember(miembro!);
+              
+              //Guardamos credenciales en shared preferences
+              _saveCredentials(miembro!.name, miembro!.password);
 
               //Aqui vamos al menu principal
               context.push("/mainmenu");
@@ -74,6 +79,25 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
     });
+
+    _loadCredentials();
+  }
+  
+  void _saveCredentials(String userName, String pass) async{
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    preferences.setString("usernamePreferences", userName);
+    preferences.setString("passPreferences", pass);
+  }
+
+  void _loadCredentials() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    usernamePreferences = preferences.getString("usernamePreferences") ?? "";
+    passPreferences = preferences.getString("passPreferences") ?? "";
+
+    if(usernamePreferences != "" && passPreferences != ""){
+      //Hacemos login
+      _loginViewModel.performLoginMember(usernamePreferences, passPreferences);
+    }
   }
 
   @override
