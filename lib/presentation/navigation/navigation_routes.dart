@@ -1,4 +1,5 @@
 
+
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/lent_games_screen.dart';
@@ -6,10 +7,12 @@ import 'package:gremio_de_historias/presentation/views/lent_games_screen/boardga
 import 'package:gremio_de_historias/presentation/views/login_screen/login_screen.dart';
 import 'package:gremio_de_historias/presentation/views/main_menu_screen.dart';
 import 'package:gremio_de_historias/presentation/views/own_games_screen.dart';
+import 'package:gremio_de_historias/presentation/views/splash_screen.dart';
 
 class NavigationRoutes{
   static const INITIAL_ROUTE = "/";
   static const String MAIN_MENU_ROUTE = "/mainmenu";
+  static const String LOGIN_ROUTE = "/login";
   static const String LENT_SCREEN_ROUTE = "/lent";
   static const String BOARDGAME_DETAIL_ROUTE = "$LENT_SCREEN_ROUTE/$_BOARDGAME_DETAIL_PATH";
   static const String OWNGAMES_SCREEN_ROUTE = "/owngames";
@@ -22,9 +25,13 @@ final GoRouter router = GoRouter(
     routes: [
       GoRoute(
           path: NavigationRoutes.INITIAL_ROUTE,
-        builder: (context, state) => const LoginScreen()
+        builder: (context, state) => const SplashScreen()
       ),
 
+      GoRoute(
+          path: NavigationRoutes.LOGIN_ROUTE,
+          builder: (context, state) => const LoginScreen()
+      ),
 
       GoRoute(
         path: NavigationRoutes.MAIN_MENU_ROUTE,
