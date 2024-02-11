@@ -2,6 +2,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_member_screen.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/lent_games_screen.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/boardgame_detail.dart';
 import 'package:gremio_de_historias/presentation/views/login_screen/login_screen.dart';
@@ -16,6 +17,7 @@ class NavigationRoutes{
   static const String LENT_SCREEN_ROUTE = "/lent";
   static const String BOARDGAME_DETAIL_ROUTE = "$LENT_SCREEN_ROUTE/$_BOARDGAME_DETAIL_PATH";
   static const String OWNGAMES_SCREEN_ROUTE = "/owngames";
+  static const String IPHONE_SCREEN_ROUTE = "/iphone";
 
   static const String _BOARDGAME_DETAIL_PATH = "boardgame_detail";
 }
@@ -38,8 +40,6 @@ final GoRouter router = GoRouter(
         builder: (context, state) => MainMenuScreen()
       ),
 
-
-
       GoRoute(
           path: NavigationRoutes.LENT_SCREEN_ROUTE,
         builder: (context, state) => const LentGamesScreen(),
@@ -56,6 +56,12 @@ final GoRouter router = GoRouter(
       GoRoute(
           path: NavigationRoutes.OWNGAMES_SCREEN_ROUTE,
         builder: (context, state) => const OwnGamesScreen()
-      )
+      ),
+
+      GoRoute(
+          path: NavigationRoutes.IPHONE_SCREEN_ROUTE,
+          builder: (context, state) => const IphoneMemberScreen()
+      ),
+
     ]
 );
