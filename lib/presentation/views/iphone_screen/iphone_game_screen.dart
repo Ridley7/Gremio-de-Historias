@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
-import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
-import 'package:gremio_de_historias/presentation/views/lent_games_screen/viewmodel/lent_game_view_model.dart';
+import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/board_game_list_widget.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/overlay_loading_view.dart';
-import 'package:provider/provider.dart';
 
-class LentGamesScreen extends StatefulWidget {
-  const LentGamesScreen({super.key});
+class IPhoneGameScreen extends StatefulWidget {
+  const IPhoneGameScreen({
+    super.key,
+    required this.memberName
+  });
+
+  final String memberName;
 
   @override
-  State<LentGamesScreen> createState() => _LentGamesScreenState();
+  State<IPhoneGameScreen> createState() => _IPhoneGameScreenState();
 }
-class _LentGamesScreenState extends State<LentGamesScreen> {
+class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
 
-  final LentGameViewModel _lentGameViewModel = LentGameViewModel();
+  final IPhoneGameViewModel _iPhoneGameViewModel = IPhoneGameViewModel();
   List<BoardGame> boardGames = [];
   List<bool> checkedList = [];
   DateTime? selectedDate;
@@ -28,9 +31,8 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //_getBoardGames();
 
-    _lentGameViewModel.setBorrowedGameState.stream.listen((state) {
+    _iPhoneGameViewModel.setIphoneBorrowedGamesState.stream.listen((state) {
       switch(state.status){
         case Status.LOADING:
           OverlayLoadingView.show(context);
@@ -40,7 +42,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           InfoView.show(context, "Juego retirado correctamente");
           setState(() {
             //Hace falta esto?
-            _lentGameViewModel.fetchBoardGames();
+            _iPhoneGameViewModel.fetchBoardGames();
 
           });
           break;
@@ -53,7 +55,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       }
     });
 
-    _lentGameViewModel.getBorrowedGameBoardState.stream.listen((state) {
+    _iPhoneGameViewModel.getIphoneBorrowedBoardGameState.stream.listen((state) {
       switch(state.status){
         case Status.LOADING:
           OverlayLoadingView.show(context);
@@ -74,7 +76,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       }
     });
 
-    _lentGameViewModel.getLentGameState.stream.listen((state) {
+    _iPhoneGameViewModel.getIphoneBoardGameState.stream.listen((state) {
       switch(state.status){
         case Status.LOADING:
           OverlayLoadingView.show(context);
@@ -95,21 +97,20 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       }
     });
 
-    _lentGameViewModel.fetchBoardGames();
+    _iPhoneGameViewModel.fetchBoardGames();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Juegos Disponibles"),
+        title: Text("2. Seleccione el juego"),
         centerTitle: true,
       ),
-      
+
       floatingActionButton: FloatingActionButton(
         onPressed: () async{
-
-          //Si no hemos elegido ningun juego no hacemos nada
+          //Si no hemos elegido un juego no hacemos nada
           bool findedGame = false;
           for(int i = 0, max = checkedList.length; i < max; i++){
             if(checkedList[i]){
@@ -130,45 +131,44 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           if(selectedDate == null){ return; }
 
           //Comprobamos si el dia elegido de devolucion no supera el mes
-          int daysAllowed = selectedDate!.difference(DateTime.now()).inDays;
-          if(daysAllowed > 15){
+          int dayAllowed = selectedDate!.difference(DateTime.now()).inDays;
+          if(dayAllowed > 15){
             InfoView.show(context, "La fecha de prestamos no puede exceder los 15 dias");
-          }else{
+          }
+          else
+          {
             //Obtenemos los juegos que se van a prestar
             //Para ello obtenemos todos los indices a true de checkedList
             List<int> indexBoardgamesBorrowed = List.generate(
                 checkedList.length, (index) => index).where((i) => checkedList[i]).toList();
 
-            //Ahora comprobamos que el usuario no pueda llevarse mas juegos de los que le corresponde
+            //ahora comprobamos que el usuario no pueda llevarse mas juegos de los que le corresponde
             if(indexBoardgamesBorrowed.length > 1){
-              InfoView.show(context, "No puedes retirar más de 1 juego");
+              InfoView.show(context, "No puedes retir más de 1 juego");
             }
-            else{
-
-              //Ahora comprobamos la cantidad de juegos que va a retirar más los que ya tiene en su poder
-              //La cantidad de juegos que voy a retirar estan en indexBoardgamesBorrowed.length
-              //Y ahora obtengo los que tengo en mi poder
-              final memberProvider = context.read<MemberProvider>();
-              _lentGameViewModel.fetchBorrowedBoardGames(memberProvider.currentMember.name);
+            else
+            {
+              //Ahora comprobamos la cantidad de juegos que se van a retirar mas las que ya tiene en su poder.
+              //List<BoardGame> listGamesInMyHouse = await _boardgamesRepository.getBorrowedBoardGames(widget.memberName);
+              _iPhoneGameViewModel.fetchBorrowedBoardGames(widget.memberName);
 
               if(indexBoardgamesBorrowed.length + listGamesInMyHouse.length > 1){
                 InfoView.show(context, "No puedes tener más de 1 juego en tu poder");
-              }else{
+              }
+              else
+              {
                 //Una vez obtenidos los indices, seteamos la informacion de cada juego
                 List<BoardGame> boardgamesBorrowed = [];
                 indexBoardgamesBorrowed.forEach((element) {
                   //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
-                  //Llamamos al provider para obtener la información del usuario
-                  final memberProvider = context.read<MemberProvider>();
-                  boardGames[element].takenBy = memberProvider.getCurrentMember().name;
+                  boardGames[element].takenBy = widget.memberName;
                   boardGames[element].taken = true;
                   boardgamesBorrowed.add(boardGames[element]);
                 });
 
                 //Aqui debemos comprobar cuantos juegos prestados tengo
                 //Si el usuario ha retirado 5 o menos juegos procedemos a actualizar la BD
-                _lentGameViewModel.putBorrowedGames(boardgamesBorrowed);
-
+                _iPhoneGameViewModel.putBorrowedGames(boardgamesBorrowed);
               }
             }
           }
@@ -178,7 +178,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
 
       body: BoardGameListWidget(
         boardGames: boardGames,
-        detailRoute: NavigationRoutes.BOARDGAME_DETAIL_ROUTE,
+        detailRoute: NavigationRoutes.IPHONE_SCREEN_BOARDGAME_DETAIL_ROUTE,
         checkedList: checkedList,
       )
     );

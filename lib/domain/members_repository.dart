@@ -1,9 +1,19 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gremio_de_historias/data/remote/error/remote_error_mapper.dart';
 import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 
 class MembersRepository{
+
+  Future<List<Member>> getMembers() async{
+    try{
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      QuerySnapshot querySnapshot = await db.collection(("members")).get();
+
+      return querySnapshot.docs.map((member) => Member.fromJson(member.data() as Map<String, dynamic>)).toList();
+    }catch (error){
+      throw RemoteErrorMapper.getException(error);
+    }
+  }
 
   Future<Member?> loginMember(String user, String pass) async{
 
@@ -23,28 +33,8 @@ class MembersRepository{
 
     return miembro;
 
-    /*
-    if(miembro != null){
-      print("El rol es: " + miembro!.role);
-
-      //Aqui habria que devolver un miembro, fuera se compara si es null o no es null
-
-    }else{
-      print("No hay nadie asi");
-    }
-     */
-
   }
 
-  /*
-  Future<List<BoardGame>> getBoardGames() async{
-    FirebaseFirestore db = FirebaseFirestore.instance;
-    final data = await db.collection("boardgames").get();
 
-    List<BoardGame> boardgames = data.docs.map((boardgame) => BoardGame.fromJson(boardgame.data())).toList();
-    return boardgames;
-  }
-
-   */
 
 }

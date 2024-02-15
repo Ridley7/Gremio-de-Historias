@@ -2,6 +2,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_game_screen.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_member_screen.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/lent_games_screen.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/boardgame_detail.dart';
@@ -18,8 +19,12 @@ class NavigationRoutes{
   static const String BOARDGAME_DETAIL_ROUTE = "$LENT_SCREEN_ROUTE/$_BOARDGAME_DETAIL_PATH";
   static const String OWNGAMES_SCREEN_ROUTE = "/owngames";
   static const String IPHONE_SCREEN_ROUTE = "/iphone";
+  static const String IPHONE_SCREEN_BOARDGAME_ROUTE = "$IPHONE_SCREEN_ROUTE/$_IPHONE_BOARDGAME_PATH";
+  static const String IPHONE_SCREEN_BOARDGAME_DETAIL_ROUTE = "$IPHONE_SCREEN_BOARDGAME_ROUTE/$_IPHONE_BOARDGAME_DETAIL_PATH";
 
   static const String _BOARDGAME_DETAIL_PATH = "boardgame_detail";
+  static const String _IPHONE_BOARDGAME_PATH = "iphone_boardgame";
+  static const String _IPHONE_BOARDGAME_DETAIL_PATH = "iphone_boardgame_detail_path";
 }
 
 final GoRouter router = GoRouter(
@@ -60,7 +65,25 @@ final GoRouter router = GoRouter(
 
       GoRoute(
           path: NavigationRoutes.IPHONE_SCREEN_ROUTE,
-          builder: (context, state) => const IphoneMemberScreen()
+          builder: (context, state) => const IphoneMemberScreen(),
+
+        routes: [
+          GoRoute(
+              path: NavigationRoutes._IPHONE_BOARDGAME_PATH,
+            builder: (context, state) => IPhoneGameScreen(
+              memberName: state.extra as String,
+            ),
+              routes: [
+                GoRoute(
+                    path: NavigationRoutes._IPHONE_BOARDGAME_DETAIL_PATH,
+                    builder: (context, state) => BoardGameDetail(
+                      boardGame: state.extra as BoardGame,
+                    )
+                )
+              ]
+
+          )
+        ]
       ),
 
     ]

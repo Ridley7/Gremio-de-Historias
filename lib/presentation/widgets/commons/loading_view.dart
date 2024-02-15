@@ -12,7 +12,6 @@ class LoadingView{
         context: context,
         builder: (dialogContext){
           _dialogContext = dialogContext;
-
           return const PopScope(
             canPop: false,
               child: Center(
@@ -31,13 +30,9 @@ class LoadingView{
 
   static hide(){
     if(!_isLoading) return;
-
     if(_dialogContext != null){
       Navigator.of(_dialogContext!).pop();
     }
-
     _isLoading = false;
   }
-
-
 }
