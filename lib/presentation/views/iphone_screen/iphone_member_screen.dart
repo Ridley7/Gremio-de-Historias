@@ -76,6 +76,8 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
             return ListTile(
               title: Text(members[index].name),
               onTap: (){
+                //Aqui necesitamos un provider
+
                 context.push(NavigationRoutes.IPHONE_SCREEN_BOARDGAME_ROUTE, extra: members[index].name);
               },
             );

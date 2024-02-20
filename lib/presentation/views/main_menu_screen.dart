@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/main_menu_screen/item_main_menu.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/button_main_menu.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -65,43 +66,18 @@ class MainMenuScreen extends StatelessWidget {
                       context.push(mainMenu[index].route);
                     }
                   },
-                  child: Card(
-                    margin: const EdgeInsets.all(64.0),
-                    child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 200,
-                                  child: Image.asset(mainMenu[index].iconItem, fit: BoxFit.fill,),
-                                )
-                              ],
-                            ),
-
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(mainMenu[index].titleItem, style: const TextStyle(
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.bold
-                                ),)
-                              ],
-                            )
-                          ],
-                        )
-                    ),
+                  child: ButtonMainMenu(
+                    iconRoute: mainMenu[index].iconItem,
+                    iconTitle: mainMenu[index].titleItem,
                   ),
                 );
-
-
             }
         ),
       ),
     );
   }
 }
+
+
 
 

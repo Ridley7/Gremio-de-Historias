@@ -28,7 +28,6 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    //_getBoardGames();
 
     _lentGameViewModel.setBorrowedGameState.stream.listen((state) {
       switch(state.status){
