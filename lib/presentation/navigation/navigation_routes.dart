@@ -1,6 +1,7 @@
 
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_drop_game_screen.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_game_screen.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_member_screen.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_menu_screen.dart';
@@ -93,13 +94,13 @@ final GoRouter router = GoRouter(
                 ),
 
                 //Ruta para devolver juego
-                /*
+
                 GoRoute(
                   path: NavigationRoutes._IPHONE_DROP_BOARDGAME_PATH,
                   builder: (context, state) => const IPhoneDropGameScreen()
                 )
 
-                 */
+
       
               ]
 
