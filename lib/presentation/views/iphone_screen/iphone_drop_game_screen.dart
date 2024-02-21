@@ -97,7 +97,6 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
                       boardGames[index].takenBy = "";
                       boardGames[index].taken = false;
                       _dropGameModelView.returnBorrowedGame(boardGames[index]);
-
                     });
                   },
                   child: Center(

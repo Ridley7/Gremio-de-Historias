@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gremio_de_historias/domain/boardgames_repository.dart';
+import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
+import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/dialog_view.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/overlay_loading_view.dart';
 import 'package:provider/provider.dart';
 
 class OwnGamesScreen extends StatefulWidget {
@@ -16,22 +19,60 @@ class OwnGamesScreen extends StatefulWidget {
 class _OwnGamesScreenState extends State<OwnGamesScreen> {
 
   List<BoardGame> boardGames = [];
-
-  final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+  final DropGameModelView _dropGameModelView = DropGameModelView();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _getBorrowedGames();
+
+    final memberProvider = context.read<MemberProvider>();
+
+    _dropGameModelView.setBorrowedGameState.stream.listen((state) {
+      switch(state.status){
+
+        case Status.LOADING:
+          OverlayLoadingView.show(context);
+          break;
+        case Status.SUCCESS:
+          OverlayLoadingView.hide();
+          setState(() {
+            _dropGameModelView.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
+          });
+          break;
+        case Status.ERROR:
+          OverlayLoadingView.hide();
+          ErrorView.show(context, state.exception!.toString(), (){
+            print("Error al devolver el juego");
+          });
+          break;
+      }
+    });
+
+    _dropGameModelView.getBorrowedGameBoardState.stream.listen((state) {
+      switch(state.status){
+
+        case Status.LOADING:
+          OverlayLoadingView.show(context);
+          break;
+        case Status.SUCCESS:
+          OverlayLoadingView.hide();
+          setState(() {
+            boardGames = state.data!;
+          });
+          break;
+        case Status.ERROR:
+          OverlayLoadingView.hide();
+          ErrorView.show(context, state.exception!.toString(), (){
+            print("Error al cargar los juegos prestados en pantalla de iphone");
+          });
+          break;
+      }
+    });
+
+    _dropGameModelView.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
   }
 
-  void _getBorrowedGames() async{
-    //Necesito el provider
-    final memberProvider = context.read<MemberProvider>();
-    boardGames = await _boardgamesRepository.getBorrowedBoardGames(memberProvider.currentMember.name);
-    setState(() {});
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +96,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
                     DialogView.show(context, "¿Seguro que deseas devolver este juego?", (){
                       boardGames[index].takenBy = "";
                       boardGames[index].taken = false;
-                      _boardgamesRepository.returnBorrowedGame(boardGames[index]);
-                      _getBorrowedGames();
+                      _dropGameModelView.returnBorrowedGame(boardGames[index]);
                     });
                   },
                   child: Center(
