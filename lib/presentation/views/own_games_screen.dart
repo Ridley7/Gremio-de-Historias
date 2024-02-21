@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
-import 'package:gremio_de_historias/presentation/widgets/commons/dialog_view.dart';
+import 'package:gremio_de_historias/presentation/widgets/commons/card_drop_game.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/overlay_loading_view.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +77,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Juegos prestados"),
+        title: const Text("Juegos prestados"),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -88,53 +87,10 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
             ),
             itemCount: boardGames.length,
             itemBuilder: (context, index){
-              return Card(
-                margin: const EdgeInsets.all(32.0),
-                child: InkWell(
-                  onTap: (){
-                    //Aqui sacamos modal para devolver juego
-                    DialogView.show(context, "¿Seguro que deseas devolver este juego?", (){
-                      boardGames[index].takenBy = "";
-                      boardGames[index].taken = false;
-                      _dropGameModelView.returnBorrowedGame(boardGames[index]);
-                    });
-                  },
-                  child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                  width: 200,
-                                  child: CachedNetworkImage(
-                                    imageUrl: boardGames[index].urlImage,
-                                    fit: BoxFit.fill,
-                                  )
-                              )
-                            ],
-                          ),
-
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                child: Text("${index + 1}. ${boardGames[index].name}",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                  ),),
-                              )
-                            ],
-                          )
-                        ],
-                      )
-                  ),
-                ),
+              return CardDropGame(
+                  dropGameModelView: _dropGameModelView,
+                  boardGame: boardGames[index],
+                  index: index
               );
             }
         ),
