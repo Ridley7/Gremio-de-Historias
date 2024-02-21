@@ -158,7 +158,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
                 indexBoardgamesBorrowed.forEach((element) {
                   //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
                   //Llamamos al provider para obtener la información del usuario
-                  final memberProvider = context.read<MemberProvider>();
+                  final memberProvider = context.read<MemberProvider>(); //Creo que esto sobra
                   boardGames[element].takenBy = memberProvider.getCurrentMember().name;
                   boardGames[element].taken = true;
                   boardgamesBorrowed.add(boardGames[element]);

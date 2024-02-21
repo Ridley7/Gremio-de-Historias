@@ -3,10 +3,12 @@ import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
+import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_member_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/overlay_loading_view.dart';
+import 'package:provider/provider.dart';
 
 class IphoneMemberScreen extends StatefulWidget {
   const IphoneMemberScreen({super.key});
@@ -17,9 +19,6 @@ class IphoneMemberScreen extends StatefulWidget {
 
 class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
 
-  //Me quedo aqui, proximos pasos.
-  //1. hacer un iphoneMemberModelView y traer a todos los miembros
-  //2. hacer una lista de juegos para alquilar.
   List<Member> members = [];
 
   final IPhoneMemberViewModel _iphoneMemberViewModel = IPhoneMemberViewModel();
@@ -67,6 +66,10 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    //Accedemos al proxy member provider
+    final proxyMemberProvider = context.read<ProxyMemberProvider>();
+
     return Scaffold(
       appBar: AppBar(title: Text("1. Seleccione el miembro"),),
       body: SafeArea(
@@ -76,9 +79,13 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
             return ListTile(
               title: Text(members[index].name),
               onTap: (){
-                //Aqui necesitamos un provider
+                //Llamamos al proxy member provider
+                proxyMemberProvider.setProxyMember(members[index]);
 
-                context.push(NavigationRoutes.IPHONE_SCREEN_BOARDGAME_ROUTE, extra: members[index].name);
+                //Aqui necesitamos un provider
+                context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE);
+                //context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE, extra: members[index].name);
+                //context.push(NavigationRoutes.IPHONE_SCREEN_BOARDGAME_ROUTE, extra: members[index].name);
               },
             );
             }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gremio_de_historias/firebase_options.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
+import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:provider/provider.dart';
 import 'presentation/navigation/navigation_routes.dart';
 
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<MemberProvider>(create: (_) => MemberProvider()),
+        ChangeNotifierProvider<ProxyMemberProvider>(create: (_) => ProxyMemberProvider())
       ],
       child: MaterialApp.router(
         routerConfig: router,

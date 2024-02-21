@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
+import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/board_game_list_widget.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/info_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/overlay_loading_view.dart';
+import 'package:provider/provider.dart';
 
 class IPhoneGameScreen extends StatefulWidget {
   const IPhoneGameScreen({
     super.key,
-    required this.memberName
   });
 
-  final String memberName;
 
   @override
   State<IPhoneGameScreen> createState() => _IPhoneGameScreenState();
@@ -150,7 +150,8 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
             {
               //Ahora comprobamos la cantidad de juegos que se van a retirar mas las que ya tiene en su poder.
               //List<BoardGame> listGamesInMyHouse = await _boardgamesRepository.getBorrowedBoardGames(widget.memberName);
-              _iPhoneGameViewModel.fetchBorrowedBoardGames(widget.memberName);
+              final proxyMemberProvider = context.read<ProxyMemberProvider>();
+              _iPhoneGameViewModel.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
 
               if(indexBoardgamesBorrowed.length + listGamesInMyHouse.length > 1){
                 InfoView.show(context, "No puedes tener más de 1 juego en tu poder");
@@ -161,7 +162,8 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
                 List<BoardGame> boardgamesBorrowed = [];
                 indexBoardgamesBorrowed.forEach((element) {
                   //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
-                  boardGames[element].takenBy = widget.memberName;
+                  boardGames[element].takenBy = proxyMemberProvider.getProxyMember().name;
+                  //boardGames[element].takenBy = widget.memberName;
                   boardGames[element].taken = true;
                   boardgamesBorrowed.add(boardGames[element]);
                 });
