@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 
 class BoardGameDetail extends StatelessWidget {
-  const BoardGameDetail({
+  BoardGameDetail({
     super.key,
     required this.boardGame
   });
 
   final BoardGame boardGame;
+
+  final List<String> nombres = ['Juan', 'María', 'Pedro', 'Ana'];
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,28 @@ class BoardGameDetail extends StatelessWidget {
               ],
             ),
 
+            const SizedBox(
+              height: 8.0,
+            ),
 
+            const Text("Prestado anteriormente por:", style: TextStyle(fontSize: 24),),
+
+            const SizedBox(
+              height: 8.0,
+            ),
+
+            SizedBox(
+              height: 100.0,
+              child: ListView(
+                physics: const NeverScrollableScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                children: nombres.take(2).map((nombre){
+                  return ListTile(
+                    title: Text(nombre, style: const TextStyle(fontSize: 20),),
+                  );
+                }).toList(),
+              ) ,
+            )
           ],
         ),
       ),
