@@ -8,6 +8,7 @@ class BoardGame{
   String age;
   String observations;
   String duration;
+  List<String> oldUsers;
 
   BoardGame({
     required this.id,
@@ -18,7 +19,8 @@ class BoardGame{
     required this.amountPlayers,
     required this.age,
     required this.observations,
-    required this.duration
+    required this.duration,
+    required this.oldUsers
   });
 
   factory BoardGame.fromJson(Map<String, dynamic> json) {
@@ -31,7 +33,8 @@ class BoardGame{
         amountPlayers: json["amountPlayers"],
         age: json["age"],
         observations: json["observations"],
-        duration: json["duration"]
+        duration: json["duration"],
+      oldUsers: List<String>.from(json['oldUsers']),
     );
   }
 

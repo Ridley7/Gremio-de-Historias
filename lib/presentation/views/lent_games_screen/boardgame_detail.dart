@@ -10,8 +10,6 @@ class BoardGameDetail extends StatelessWidget {
 
   final BoardGame boardGame;
 
-  final List<String> nombres = ['Juan', 'María', 'Pedro', 'Ana'];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +104,7 @@ class BoardGameDetail extends StatelessWidget {
               child: ListView(
                 physics: const NeverScrollableScrollPhysics(),
                 scrollDirection: Axis.vertical,
-                children: nombres.take(2).map((nombre){
+                children: boardGame.oldUsers.take(2).map((nombre){
                   return ListTile(
                     title: Text(nombre, style: const TextStyle(fontSize: 20),),
                   );
