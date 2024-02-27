@@ -49,6 +49,7 @@ class BoardGame{
       "age": age,
       "observations": observations,
       "duration": duration,
+      "oldUsers": oldUsers
     };
   }
 

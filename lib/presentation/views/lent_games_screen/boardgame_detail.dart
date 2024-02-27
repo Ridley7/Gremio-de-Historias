@@ -67,6 +67,14 @@ class BoardGameDetail extends StatelessWidget {
               height: 8.0,
             ),
 
+            const Divider(
+              color: Colors.black54,
+              height: 50,
+              thickness: 2,
+              indent: 20,
+              endIndent: 40,
+            ),
+
             const Row(
               children: [
                 Text("Observaciones: ",
@@ -93,6 +101,14 @@ class BoardGameDetail extends StatelessWidget {
               height: 8.0,
             ),
 
+            const Divider(
+              color: Colors.black54,
+              height: 50,
+              thickness: 2,
+              indent: 20,
+              endIndent: 40,
+            ),
+
             const Text("Prestado anteriormente por:", style: TextStyle(fontSize: 24),),
 
             const SizedBox(
@@ -110,7 +126,11 @@ class BoardGameDetail extends StatelessWidget {
                   );
                 }).toList(),
               ) ,
-            )
+            ),
+
+            const SizedBox(
+              height: 16.0,
+            ),
           ],
         ),
       ),

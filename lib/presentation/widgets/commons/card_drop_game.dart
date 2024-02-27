@@ -24,8 +24,18 @@ class CardDropGame extends StatelessWidget {
         onTap: (){
           //Aqui sacamos modal para devolver juego
           DialogView.show(context, "¿Seguro que deseas devolver este juego?", (){
+         //Insertamos el nombre del usuario que va a devolver el libro en la lista de usuarios
+            //que han solicitado el juego
+            String oldUser = "${boardGame.takenBy} - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
+            boardGame.oldUsers.insert(0, oldUser);
+
+            if(boardGame.oldUsers.length > 10){
+              boardGame.oldUsers.removeLast();
+            }
+
             boardGame.takenBy = "";
             boardGame.taken = false;
+
             _dropGameModelView.returnBorrowedGame(boardGame);
           });
         },
