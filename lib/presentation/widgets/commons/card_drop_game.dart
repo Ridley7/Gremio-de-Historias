@@ -5,7 +5,7 @@ import 'package:gremio_de_historias/presentation/views/common_model_view/drop_ga
 import 'package:gremio_de_historias/presentation/widgets/commons/dialog_view.dart';
 
 class CardDropGame extends StatelessWidget {
-  const CardDropGame({
+  CardDropGame({
     super.key,
     required DropGameModelView dropGameModelView,
     required this.boardGame,
@@ -16,14 +16,20 @@ class CardDropGame extends StatelessWidget {
   final BoardGame boardGame;
   final int index;
 
+  final TextEditingController textEditingController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+
+    //Seteamos el valor del textEditingController
+    textEditingController.text = boardGame.observations;
+
     return Card(
       margin: const EdgeInsets.all(32.0),
       child: InkWell(
         onTap: (){
           //Aqui sacamos modal para devolver juego
-          DialogView.show(context, "¿Seguro que deseas devolver este juego?", (){
+          DialogView.show(context, "¿Seguro que deseas devolver este juego?", textEditingController, (){
          //Insertamos el nombre del usuario que va a devolver el libro en la lista de usuarios
             //que han solicitado el juego
             String oldUser = "${boardGame.takenBy} - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
@@ -33,8 +39,11 @@ class CardDropGame extends StatelessWidget {
               boardGame.oldUsers.removeLast();
             }
 
+            //¿Como meto observaciones aqui?
+
             boardGame.takenBy = "";
             boardGame.taken = false;
+            boardGame.observations = textEditingController.text;
 
             _dropGameModelView.returnBorrowedGame(boardGame);
           });

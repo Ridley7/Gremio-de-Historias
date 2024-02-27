@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class DialogView{
+class ReturnGameDialogView{
   static BuildContext? _dialogContext;
 
-  static show(BuildContext context, String message, TextEditingController textEditingController, Function onDone){
+  static show(BuildContext context, String message, Function onDone){
 
     showDialog(
         context: context,
@@ -12,22 +12,7 @@ class DialogView{
 
           return AlertDialog(
             title: const Text("Devolver Juego"),
-            content: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(message),
-                  TextField(
-                    autofocus: true,
-                    decoration: const InputDecoration(hintText: "Observaciones"),
-                    controller: textEditingController,
-                    minLines: 1,
-                    maxLines: 10,
-
-                  )
-                ],
-              ),
-            ),
-
+            content: Text(message),
             actions: [
               TextButton(
                   onPressed:(){
