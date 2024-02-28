@@ -81,7 +81,13 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: GridView.builder(
+        child:
+        boardGames.isEmpty
+        ? const Center(
+          child: Text("No tienes juegos en tu poder para devolver."),
+        )
+        :
+        GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 1,
             ),
