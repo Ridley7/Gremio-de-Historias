@@ -13,7 +13,7 @@ class ButtonMainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.all(64.0),
+      margin: const EdgeInsets.symmetric(horizontal: 64.0, vertical: 32),
       child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

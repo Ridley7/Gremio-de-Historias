@@ -27,7 +27,7 @@ class MainMenuScreen extends StatelessWidget {
 
     //Seteamos el tipo de menu que queremos
     optionsMainMenu.forEach((option) {
-      if(memberProvider.currentMember.level_access >= option.access){
+      if(memberProvider.getCurrentMember().level_access >= option.access){
         mainMenu.add(option);
       }
     });
@@ -40,38 +40,55 @@ class MainMenuScreen extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
+        child: Column(
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  Text("Usuario: ${memberProvider.getCurrentMember().name}"),
+                ],
+              ),
             ),
-            itemCount: mainMenu.length,
-            itemBuilder: (context, index){
 
-                return InkWell(
-                  onTap: () async{
 
-                    //Comprobamos si estamos ante log out
-                    if(index == mainMenu.length - 1){
-                      //Limpiamos los shared preferences
-                      LoadingView.show(context);
-                      _cleanCredentials();
-                      //Este await es para evitar un error que de momento no se como tratar
-                      await Future.delayed(const Duration(seconds: 2));
-                      LoadingView.hide();
-
-                      context.go(mainMenu[index].route);
-                    }
-                    else
-                    {
-                      context.push(mainMenu[index].route);
-                    }
-                  },
-                  child: ButtonMainMenu(
-                    iconRoute: mainMenu[index].iconItem,
-                    iconTitle: mainMenu[index].titleItem,
+            Flexible(
+              child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 1,
                   ),
-                );
-            }
+                  itemCount: mainMenu.length,
+                  itemBuilder: (context, index){
+              
+                      return InkWell(
+                        onTap: () async{
+              
+                          //Comprobamos si estamos ante log out
+                          if(index == mainMenu.length - 1){
+                            //Limpiamos los shared preferences
+                            LoadingView.show(context);
+                            _cleanCredentials();
+                            //Este await es para evitar un error que de momento no se como tratar
+                            await Future.delayed(const Duration(seconds: 2));
+                            LoadingView.hide();
+              
+                            context.go(mainMenu[index].route);
+                          }
+                          else
+                          {
+                            context.push(mainMenu[index].route);
+                          }
+                        },
+                        child: ButtonMainMenu(
+                          iconRoute: mainMenu[index].iconItem,
+                          iconTitle: mainMenu[index].titleItem,
+                        ),
+                      );
+                  }
+              ),
+            ),
+          ],
         ),
       ),
     );

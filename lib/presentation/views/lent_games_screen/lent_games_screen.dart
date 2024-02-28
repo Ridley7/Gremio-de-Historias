@@ -148,7 +148,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
               //La cantidad de juegos que voy a retirar estan en indexBoardgamesBorrowed.length
               //Y ahora obtengo los que tengo en mi poder
               final memberProvider = context.read<MemberProvider>();
-              _lentGameViewModel.fetchBorrowedBoardGames(memberProvider.currentMember.name);
+              _lentGameViewModel.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
 
               if(indexBoardgamesBorrowed.length + listGamesInMyHouse.length > 1){
                 InfoView.show(context, "No puedes tener más de 1 juego en tu poder");
