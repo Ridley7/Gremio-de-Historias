@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 
 class BoardGameDetail extends StatelessWidget {
-  BoardGameDetail({
-    super.key,
-    required this.boardGame
-  });
+  BoardGameDetail({super.key, required this.boardGame});
 
   final BoardGame boardGame;
 
@@ -17,7 +14,6 @@ class BoardGameDetail extends StatelessWidget {
         title: const Text("Detalle"),
         centerTitle: true,
       ),
-
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -25,7 +21,10 @@ class BoardGameDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(boardGame.name, style: const TextStyle(fontSize: 30),),
+                Text(
+                  boardGame.name,
+                  style: const TextStyle(fontSize: 30),
+                ),
               ],
             ),
 
@@ -33,8 +32,9 @@ class BoardGameDetail extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: CachedNetworkImage(
-                  imageUrl: boardGame.urlImage,
-                placeholder: (context, url) => const CircularProgressIndicator(),
+                imageUrl: boardGame.urlImage,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
                 errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             ),
@@ -43,7 +43,10 @@ class BoardGameDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${boardGame.amountPlayers} Jugadores ", style: const TextStyle(fontSize: 24),),
+                Text(
+                  "${boardGame.amountPlayers} Jugadores ",
+                  style: const TextStyle(fontSize: 24),
+                ),
               ],
             ),
 
@@ -51,7 +54,10 @@ class BoardGameDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(boardGame.duration, style: const TextStyle(fontSize: 24),),
+                Text(
+                  boardGame.duration,
+                  style: const TextStyle(fontSize: 24),
+                ),
               ],
             ),
 
@@ -59,7 +65,10 @@ class BoardGameDetail extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(boardGame.age, style: const TextStyle(fontSize: 24),),
+                Text(
+                  boardGame.age,
+                  style: const TextStyle(fontSize: 24),
+                ),
               ],
             ),
 
@@ -79,7 +88,8 @@ class BoardGameDetail extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Observaciones: ",
+                  child: Text(
+                    "Observaciones: ",
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
@@ -95,7 +105,8 @@ class BoardGameDetail extends StatelessWidget {
                 Flexible(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(boardGame.observations,
+                    child: Text(
+                      boardGame.observations,
                       textAlign: TextAlign.start,
                       style: const TextStyle(fontSize: 20),
                     ),
@@ -116,12 +127,12 @@ class BoardGameDetail extends StatelessWidget {
               endIndent: 40,
             ),
 
-
             const Row(
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: Text("Prestado anteriormente por: ",
+                  child: Text(
+                    "Solicitado anteriormente por: ",
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
@@ -134,15 +145,24 @@ class BoardGameDetail extends StatelessWidget {
 
             SizedBox(
               height: 100.0,
-              child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                scrollDirection: Axis.vertical,
-                children: boardGame.oldUsers.take(2).map((nombre){
-                  return ListTile(
-                    title: Text(nombre, style: const TextStyle(fontSize: 20),),
-                  );
-                }).toList(),
-              ) ,
+              child: boardGame.oldUsers.isEmpty
+                  ? const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                        "Este juego aún no ha dejado la ludoteca. Sé el primero en hacerlo."),
+                  )
+                  : ListView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      children: boardGame.oldUsers.take(2).map((nombre) {
+                        return ListTile(
+                          title: Text(
+                            nombre,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        );
+                      }).toList(),
+                    ),
             ),
 
             const SizedBox(
