@@ -77,8 +77,11 @@ class BoardGameDetail extends StatelessWidget {
 
             const Row(
               children: [
-                Text("Observaciones: ",
-                  style: TextStyle(fontSize: 24),
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Observaciones: ",
+                    style: TextStyle(fontSize: 24),
+                  ),
                 ),
               ],
             ),
@@ -89,10 +92,14 @@ class BoardGameDetail extends StatelessWidget {
 
             Row(
               children: [
-                Wrap(
-                  children: [
-                    Text(boardGame.observations, textAlign: TextAlign.start, style: const TextStyle(fontSize: 20),),
-                  ],
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(boardGame.observations,
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(fontSize: 20),
+                    ),
+                  ),
                 ),
               ],
             ),
@@ -109,7 +116,17 @@ class BoardGameDetail extends StatelessWidget {
               endIndent: 40,
             ),
 
-            const Text("Prestado anteriormente por:", style: TextStyle(fontSize: 24),),
+
+            const Row(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Prestado anteriormente por: ",
+                    style: TextStyle(fontSize: 24),
+                  ),
+                ),
+              ],
+            ),
 
             const SizedBox(
               height: 8.0,
