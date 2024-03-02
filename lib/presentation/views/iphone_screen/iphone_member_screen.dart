@@ -6,7 +6,6 @@ import 'package:gremio_de_historias/presentation/navigation/navigation_routes.da
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_member_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
-import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/overlay_loading_view.dart';
 import 'package:provider/provider.dart';
 
@@ -18,7 +17,6 @@ class IphoneMemberScreen extends StatefulWidget {
 }
 
 class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
-
   List<Member> members = [];
 
   final IPhoneMemberViewModel _iphoneMemberViewModel = IPhoneMemberViewModel();
@@ -29,23 +27,22 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
     super.initState();
 
     _iphoneMemberViewModel.getIphoneMemberState.stream.listen((state) {
-      switch(state.status){
-
+      switch (state.status) {
         case Status.LOADING:
           //LoadingView.show(context);
-        OverlayLoadingView.show(context);
+          OverlayLoadingView.show(context);
           break;
         case Status.SUCCESS:
           //LoadingView.hide();
-        OverlayLoadingView.hide();
+          OverlayLoadingView.hide();
           setState(() {
             members = state.data!;
           });
           break;
         case Status.ERROR:
           //LoadingView.hide();
-        OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), (){
+          OverlayLoadingView.hide();
+          ErrorView.show(context, state.exception!.toString(), () {
             print("Estas en el Retry");
           });
           break;
@@ -55,40 +52,52 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
     _iphoneMemberViewModel.fetchMembers();
   }
 
-
   @override
   void dispose() {
     // TODO: implement dispose
     _iphoneMemberViewModel.dispose();
     super.dispose();
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     //Accedemos al proxy member provider
     final proxyMemberProvider = context.read<ProxyMemberProvider>();
 
     return Scaffold(
-      appBar: AppBar(title: Text("1. Seleccione el miembro"),),
+      appBar: AppBar(
+        title: const Text("Seleccione el miembro"),
+      ),
       body: SafeArea(
-        child: ListView.builder(
-          itemCount: members.length,
-            itemBuilder: (BuildContext context, int index){
-            return ListTile(
-              title: Text(members[index].name),
-              onTap: (){
-                //Llamamos al proxy member provider
-                proxyMemberProvider.setProxyMember(members[index]);
+        child: Column(
+          children: [
 
-                //Aqui necesitamos un provider
-                context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE);
-                //context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE, extra: members[index].name);
-                //context.push(NavigationRoutes.IPHONE_SCREEN_BOARDGAME_ROUTE, extra: members[index].name);
-              },
-            );
-            }
+            Divider(
+              color: Colors.black54,
+            ),
+            Flexible(
+              child: ListView.separated(
+                  separatorBuilder: (context, index) => const
+                  Divider(
+                    color: Colors.black54,
+                  ),
+                  itemCount: members.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return ListTile(
+                      title: Text(members[index].name),
+                      onTap: () {
+                        //Llamamos al proxy member provider
+                        proxyMemberProvider.setProxyMember(members[index]);
+              
+                        //Aqui necesitamos un provider
+                        context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE);
+                      },
+                    );
+                  }),
+            ),
+
+
+          ],
         ),
       ),
     );
