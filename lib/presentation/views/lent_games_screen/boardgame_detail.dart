@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 
 class BoardGameDetail extends StatelessWidget {
-  BoardGameDetail({super.key, required this.boardGame});
+  const BoardGameDetail({super.key, required this.boardGame});
 
   final BoardGame boardGame;
 

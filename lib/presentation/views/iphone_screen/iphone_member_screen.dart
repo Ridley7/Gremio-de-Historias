@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_member_view_model.dart';
@@ -29,21 +30,18 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
     _iphoneMemberViewModel.getIphoneMemberState.stream.listen((state) {
       switch (state.status) {
         case Status.LOADING:
-          //LoadingView.show(context);
           OverlayLoadingView.show(context);
           break;
         case Status.SUCCESS:
-          //LoadingView.hide();
           OverlayLoadingView.hide();
           setState(() {
             members = state.data!;
           });
           break;
         case Status.ERROR:
-          //LoadingView.hide();
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Estas en el Retry");
+          ErrorView.show(context, StringsApp.ERROR_OBTENER_MIEMBROS, () {
+            _iphoneMemberViewModel.fetchMembers();
           });
           break;
       }
@@ -61,26 +59,23 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //Accedemos al proxy member provider
     final proxyMemberProvider = context.read<ProxyMemberProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Seleccione el miembro"),
+        title: const Text(StringsApp.SELECCIONE_MIEMBRO),
       ),
       body: SafeArea(
         child: Column(
           children: [
-
-            Divider(
+            const Divider(
               color: Colors.black54,
             ),
             Flexible(
               child: ListView.separated(
-                  separatorBuilder: (context, index) => const
-                  Divider(
-                    color: Colors.black54,
-                  ),
+                  separatorBuilder: (context, index) => const Divider(
+                        color: Colors.black54,
+                      ),
                   itemCount: members.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
@@ -88,15 +83,13 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
                       onTap: () {
                         //Llamamos al proxy member provider
                         proxyMemberProvider.setProxyMember(members[index]);
-              
+
                         //Aqui necesitamos un provider
                         context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE);
                       },
                     );
                   }),
             ),
-
-
           ],
         ),
       ),
