@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:gremio_de_historias/domain/members_repository.dart';
+import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/presentation/base/base_view_model.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
-import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 
 class IPhoneMemberViewModel extends BaseViewModel{
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
-import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_member_view_model.dart';

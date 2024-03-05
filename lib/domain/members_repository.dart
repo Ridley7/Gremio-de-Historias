@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gremio_de_historias/data/remote/error/remote_error_mapper.dart';
-import 'package:gremio_de_historias/presentation/models/login_screen/member.dart';
+import 'package:gremio_de_historias/models/login_screen/member.dart';
 
 class MembersRepository{
 
