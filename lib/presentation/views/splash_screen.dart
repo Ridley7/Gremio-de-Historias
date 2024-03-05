@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
-import 'package:gremio_de_historias/presentation/model/resource_state.dart';
+import 'package:gremio_de_historias/models/resource_state.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/login_screen/viewmodel/login_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
