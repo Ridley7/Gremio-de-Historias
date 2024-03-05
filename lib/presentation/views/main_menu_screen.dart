@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gremio_de_historias/presentation/models/main_menu_screen/item_main_menu.dart';
+import 'package:gremio_de_historias/models/main_menu_screen/item_main_menu.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/button_main_menu.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
