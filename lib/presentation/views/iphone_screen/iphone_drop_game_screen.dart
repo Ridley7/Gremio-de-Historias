@@ -16,7 +16,6 @@ class IPhoneDropGameScreen extends StatefulWidget {
 }
 
 class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
-
   List<BoardGame> boardGames = [];
   final DropGameModelView _dropGameModelView = DropGameModelView();
 
@@ -28,20 +27,20 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
     final proxyMemberProvider = context.read<ProxyMemberProvider>();
 
     _dropGameModelView.setBorrowedGameState.stream.listen((state) {
-      switch(state.status){
-
+      switch (state.status) {
         case Status.LOADING:
           OverlayLoadingView.show(context);
           break;
         case Status.SUCCESS:
           OverlayLoadingView.hide();
           setState(() {
-            _dropGameModelView.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
+            _dropGameModelView.fetchBorrowedBoardGames(
+                proxyMemberProvider.getProxyMember().name);
           });
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), (){
+          ErrorView.show(context, state.exception!.toString(), () {
             print("Error al devolver el juego en pantalla de iphone");
           });
           break;
@@ -49,8 +48,7 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
     });
 
     _dropGameModelView.getBorrowedGameBoardState.stream.listen((state) {
-      switch(state.status){
-
+      switch (state.status) {
         case Status.LOADING:
           OverlayLoadingView.show(context);
           break;
@@ -62,14 +60,15 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), (){
+          ErrorView.show(context, state.exception!.toString(), () {
             print("Error al cargar los juegos prestados en pantalla de iphone");
           });
           break;
       }
     });
 
-    _dropGameModelView.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
+    _dropGameModelView
+        .fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
   }
 
   @override
@@ -79,23 +78,23 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
         title: const Text("Juegos prestados"),
         centerTitle: true,
       ),
-
       body: SafeArea(
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1
-            ),
-            itemCount: boardGames.length,
-            itemBuilder: (context, index){
-              return CardDropGame(
-                  dropGameModelView: _dropGameModelView,
-                  boardGame: boardGames[index],
-                index: index,
-              );
-            }
-        ),
+        child: boardGames.isEmpty
+            ? const Center(
+                child: Text("No tienes juegos en tu poder para devolver"),
+              )
+            : GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1),
+                itemCount: boardGames.length,
+                itemBuilder: (context, index) {
+                  return CardDropGame(
+                    dropGameModelView: _dropGameModelView,
+                    boardGame: boardGames[index],
+                    index: index,
+                  );
+                }),
       ),
     );
   }
 }
-

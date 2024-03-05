@@ -12,7 +12,7 @@ class MainMenuScreen extends StatelessWidget {
 
   final List<ItemMainMenu> optionsMainMenu = [
     ItemMainMenu(iconItem: "assets/icons/collection_games.png", titleItem: "Prestamo", route: "/lent", access: 1),
-    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: "Mis Juegos", route: "/owngames", access: 1),
+    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: "Devolución", route: "/owngames", access: 1),
     ItemMainMenu(iconItem: "assets/icons/iphone.png", titleItem: "iPhone", route: "/iphone", access: 2),
     ItemMainMenu(iconItem: "assets/icons/log_out.png", titleItem: "Cerrar Sesión", route: "/", access: 1),
   ];
