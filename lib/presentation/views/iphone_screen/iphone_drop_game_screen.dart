@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/card_drop_game.dart';
@@ -75,13 +76,13 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Juegos prestados"),
+        title: const Text(StringsApp.JUEGOS_PRESTADOS),
         centerTitle: true,
       ),
       body: SafeArea(
         child: boardGames.isEmpty
             ? const Center(
-                child: Text("No tienes juegos en tu poder para devolver"),
+                child: Text(StringsApp.NO_HAY_JUEGOS_PARA_DEVOLVER),
               )
             : GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

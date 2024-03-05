@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_game_view_model.dart';
@@ -33,6 +34,8 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
     // TODO: implement initState
     super.initState();
 
+    proxyMemberProvider = context.read<ProxyMemberProvider>();
+
     _iPhoneGameViewModel.setIphoneBorrowedGamesState.stream.listen((state) {
       switch (state.status) {
         case Status.LOADING:
@@ -40,17 +43,14 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
           break;
         case Status.SUCCESS:
           OverlayLoadingView.hide();
-          InfoView.show(context, "Juego retirado correctamente");
+          InfoView.show(context, StringsApp.JUEGO_RETIRADO);
           setState(() {
-            //Hace falta esto?
             _iPhoneGameViewModel.fetchBoardGames();
           });
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Error al guardar los juegos que se prestan");
-          });
+          ErrorView.show(context, StringsApp.ERROR_GUARDAR_JUEGOS, () {});
           break;
       }
     });
@@ -63,14 +63,13 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
         case Status.SUCCESS:
           OverlayLoadingView.hide();
           setState(() {
-            //Hacemos cosas
             listGamesInMyHouse = state.data!;
           });
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Error al obtener los juegos en poder del usuario");
+          ErrorView.show(context, StringsApp.ERROR_OBTENER_JUEGOS_POR_USUARIO, () {
+            _iPhoneGameViewModel.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
           });
           break;
       }
@@ -90,16 +89,14 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Error al obtener todos los juegos de la BD");
+          ErrorView.show(context, StringsApp.ERROR_OBTENER_TODOS_JUEGOS, () {
+            _iPhoneGameViewModel.fetchBoardGames();
           });
           break;
       }
     });
 
     _iPhoneGameViewModel.fetchBoardGames();
-
-    proxyMemberProvider = context.read<ProxyMemberProvider>();
 
     _iPhoneGameViewModel.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
   }
@@ -108,7 +105,7 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("2. Seleccione el juego"),
+          title: const Text(StringsApp.SELECCIONE_JUEGO),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
@@ -123,7 +120,7 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
             }
 
             if (!findedGame) {
-              InfoView.show(context, "Elija al menos un juego");
+              InfoView.show(context, StringsApp.ERROR_SELECCION_AL_MENOS_UN_JUEGO);
               return;
             }
 
@@ -136,14 +133,14 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
 
             //ahora comprobamos que el usuario no pueda llevarse mas juegos de los que le corresponde
             if (indexBoardgamesBorrowed.length > 1) {
-              InfoView.show(context, "No puedes retir más de 1 juego");
+              InfoView.show(context, StringsApp.ERROR_RETIRAS_MAS_DE_UN_JUEGO);
             } else {
               //Ahora comprobamos la cantidad de juegos que se van a retirar mas las que ya tiene en su poder.
 
               if (indexBoardgamesBorrowed.length + listGamesInMyHouse.length >
                   1) {
                 InfoView.show(
-                    context, "No puedes tener más de 1 juego en tu poder");
+                    context, StringsApp.ERROR_MAS_DE_UN_JUEGO_EN_CASA);
               } else {
 
                 //Una vez obtenidos los indices, seteamos la informacion de cada juego
