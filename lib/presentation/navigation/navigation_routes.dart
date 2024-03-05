@@ -1,6 +1,6 @@
 
 import 'package:go_router/go_router.dart';
-import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_drop_game_screen.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_game_screen.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/iphone_member_screen.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/model/resource_state.dart';
-import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/viewmodel/lent_game_view_model.dart';

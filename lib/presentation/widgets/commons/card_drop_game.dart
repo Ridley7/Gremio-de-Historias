@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:gremio_de_historias/presentation/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/dialog_view.dart';
 
