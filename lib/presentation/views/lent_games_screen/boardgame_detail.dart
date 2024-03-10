@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 
 class BoardGameDetail extends StatelessWidget {
   const BoardGameDetail({super.key, required this.boardGame});
@@ -11,7 +12,7 @@ class BoardGameDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Detalle"),
+        title: const Text(StringsApp.DETALLE),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -89,7 +90,7 @@ class BoardGameDetail extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    "Observaciones: ",
+                    StringsApp.OBSERVACIONES,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
@@ -132,7 +133,7 @@ class BoardGameDetail extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    "Solicitado anteriormente por: ",
+                    StringsApp.SOLICITADO_POR,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),
@@ -149,7 +150,7 @@ class BoardGameDetail extends StatelessWidget {
                   ? const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                        "Este juego aún no ha dejado la ludoteca. Sé el primero en hacerlo."),
+                        StringsApp.JUEGO_SIN_SACAR),
                   )
                   : ListView(
                       physics: const NeverScrollableScrollPhysics(),

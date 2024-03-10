@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/models/main_menu_screen/item_main_menu.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/button_main_menu.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/loading_view.dart';
@@ -11,10 +12,10 @@ class MainMenuScreen extends StatelessWidget {
   MainMenuScreen({super.key});
 
   final List<ItemMainMenu> optionsMainMenu = [
-    ItemMainMenu(iconItem: "assets/icons/collection_games.png", titleItem: "Prestamo", route: "/lent", access: 1),
-    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: "Devolución", route: "/owngames", access: 1),
-    ItemMainMenu(iconItem: "assets/icons/iphone.png", titleItem: "iPhone", route: "/iphone", access: 2),
-    ItemMainMenu(iconItem: "assets/icons/log_out.png", titleItem: "Cerrar Sesión", route: "/", access: 1),
+    ItemMainMenu(iconItem: "assets/icons/collection_games.png", titleItem: StringsApp.PRESTAMO, route: "/lent", access: 1),
+    ItemMainMenu(iconItem: "assets/icons/my_games.png", titleItem: StringsApp.PRESTAMO, route: "/owngames", access: 1),
+    ItemMainMenu(iconItem: "assets/icons/iphone.png", titleItem: StringsApp.IPHONE, route: "/iphone", access: 2),
+    ItemMainMenu(iconItem: "assets/icons/log_out.png", titleItem: StringsApp.CERRAR_SESION, route: "/", access: 1),
   ];
 
   List<ItemMainMenu> mainMenu = [];
@@ -47,7 +48,7 @@ class MainMenuScreen extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text("Usuario: ${memberProvider.getCurrentMember().name}"),
+                  Text("${StringsApp.USER} ${memberProvider.getCurrentMember().name}"),
                 ],
               ),
             ),

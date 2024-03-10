@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/card_drop_game.dart';
@@ -26,6 +27,8 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
     super.initState();
 
     final memberProvider = context.read<MemberProvider>();
+
+    //PORQUE HAY DOS STREAMS AQUI!! REVISAR
 
     _dropGameModelView.setBorrowedGameState.stream.listen((state) {
       switch(state.status){
@@ -84,7 +87,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
         child:
         boardGames.isEmpty
         ? const Center(
-          child: Text("No tienes juegos en tu poder para devolver."),
+          child: Text(StringsApp.NO_JUEGOS_DEVOLVER),
         )
         :
         GridView.builder(

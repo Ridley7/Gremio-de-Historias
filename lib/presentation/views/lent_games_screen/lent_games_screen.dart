@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/viewmodel/lent_game_view_model.dart';
@@ -24,12 +25,14 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
   DateTime? selectedDate;
   List<BoardGame> listGamesInMyHouse = [];
 
-  late final memberProvider;
+  late final MemberProvider memberProvider;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    memberProvider = context.read<MemberProvider>();
 
     _lentGameViewModel.setBorrowedGameState.stream.listen((state) {
       switch (state.status) {
@@ -38,17 +41,14 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           break;
         case Status.SUCCESS:
           OverlayLoadingView.hide();
-          InfoView.show(context, "Juego retirado correctamente");
+          InfoView.show(context, StringsApp.JUEGO_RETIRADO);
           setState(() {
-            //Hace falta esto?
             _lentGameViewModel.fetchBoardGames();
           });
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Error al guardar los juegos que se prestan");
-          });
+          ErrorView.show(context, StringsApp.ERROR_GUARDAR_JUEGOS, () {});
           break;
       }
     });
@@ -67,8 +67,8 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Error al obtener los juegos en poder del usuario");
+          ErrorView.show(context, StringsApp.ERROR_OBTENER_JUEGOS_POR_USUARIO, () {
+            _lentGameViewModel.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
           });
           break;
       }
@@ -88,16 +88,14 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), () {
-            print("Error al obtener todos los juegos de la BD");
+          ErrorView.show(context, StringsApp.ERROR_OBTENER_TODOS_JUEGOS, () {
+            _lentGameViewModel.fetchBoardGames();
           });
           break;
       }
     });
 
     _lentGameViewModel.fetchBoardGames();
-
-    memberProvider = context.read<MemberProvider>();
 
     _lentGameViewModel.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
   }
@@ -106,7 +104,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Juegos Disponibles"),
+          title: const Text(StringsApp.JUEGOS_DISPONIBLES),
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
@@ -121,7 +119,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
             }
 
             if (!findedGame) {
-              InfoView.show(context, "Elija al menos un juego");
+              InfoView.show(context, StringsApp.ERROR_SELECCION_AL_MENOS_UN_JUEGO);
               return;
             }
 
@@ -134,7 +132,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
 
             //Ahora comprobamos que el usuario no pueda llevarse mas juegos de los que le corresponde
             if (indexBoardgamesBorrowed.length > 1) {
-              InfoView.show(context, "No puedes retirar más de 1 juego");
+              InfoView.show(context, StringsApp.ERROR_RETIRAS_MAS_DE_UN_JUEGO);
             } else {
               //Ahora comprobamos la cantidad de juegos que va a retirar más los que ya tiene en su poder
               //La cantidad de juegos que voy a retirar estan en indexBoardgamesBorrowed.length
@@ -143,7 +141,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
               if (indexBoardgamesBorrowed.length + listGamesInMyHouse.length >
                   1) {
                 InfoView.show(
-                    context, "No puedes tener más de 1 juego en tu poder");
+                    context, StringsApp.ERROR_MAS_DE_UN_JUEGO_EN_CASA);
               } else {
 
                 //Una vez obtenidos los indices, seteamos la informacion de cada juego
