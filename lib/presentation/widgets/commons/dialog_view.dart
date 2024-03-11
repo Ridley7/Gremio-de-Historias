@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 
 class DialogView{
   static BuildContext? _dialogContext;
@@ -11,14 +12,14 @@ class DialogView{
           _dialogContext = dialogContext;
 
           return AlertDialog(
-            title: const Text("Devolver Juego"),
+            title: const Text(StringsApp.DEVOLVER_JUEGO),
             content: SingleChildScrollView(
               child: Column(
                 children: [
                   Text(message),
                   TextField(
                     autofocus: true,
-                    decoration: const InputDecoration(hintText: "Observaciones"),
+                    decoration: const InputDecoration(hintText: StringsApp.OBSERVACIONES),
                     controller: textEditingController,
                     minLines: 1,
                     maxLines: 10,
@@ -33,7 +34,7 @@ class DialogView{
                   onPressed:(){
                     Navigator.of(_dialogContext!).pop();
                   },
-                  child: const Text("Cancelar")
+                  child: const Text(StringsApp.CANCELAR)
               ),
 
               TextButton(
@@ -41,7 +42,7 @@ class DialogView{
                     onDone.call();
                     Navigator.of(_dialogContext!).pop();
                   },
-                  child: const Text("Aceptar")
+                  child: const Text(StringsApp.ACEPTAR)
               ),
             ],
           );

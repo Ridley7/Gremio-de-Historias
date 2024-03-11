@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 
 class InfoView{
   static BuildContext? _dialogContext;
@@ -11,14 +12,14 @@ class InfoView{
           _dialogContext = dialogContext;
 
           return AlertDialog(
-            title: const Text("Información"),
+            title: const Text(StringsApp.INFORMACION),
             content: Text(message),
             actions: [
               TextButton(
                   onPressed:(){
                     Navigator.of(_dialogContext!).pop();
                   },
-                  child: const Text("Aceptar")
+                  child: const Text(StringsApp.ACEPTAR)
               )
             ],
           );

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/dialog_view.dart';
 
@@ -29,7 +30,7 @@ class CardDropGame extends StatelessWidget {
       child: InkWell(
         onTap: (){
           //Aqui sacamos modal para devolver juego
-          DialogView.show(context, "¿Seguro que deseas devolver este juego?", textEditingController, (){
+          DialogView.show(context, StringsApp.SEGURO_DEVOLUCION, textEditingController, (){
          //Insertamos el nombre del usuario que va a devolver el libro en la lista de usuarios
             //que han solicitado el juego
             String oldUser = "${boardGame.takenBy} - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}";
@@ -38,8 +39,6 @@ class CardDropGame extends StatelessWidget {
             if(boardGame.oldUsers.length > 10){
               boardGame.oldUsers.removeLast();
             }
-
-            //¿Como meto observaciones aqui?
 
             boardGame.takenBy = "";
             boardGame.taken = false;

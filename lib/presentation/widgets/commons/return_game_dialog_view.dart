@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
 
 class ReturnGameDialogView{
   static BuildContext? _dialogContext;
@@ -11,14 +12,14 @@ class ReturnGameDialogView{
           _dialogContext = dialogContext;
 
           return AlertDialog(
-            title: const Text("Devolver Juego"),
+            title: const Text(StringsApp.DEVOLVER_JUEGO),
             content: Text(message),
             actions: [
               TextButton(
                   onPressed:(){
                     Navigator.of(_dialogContext!).pop();
                   },
-                  child: const Text("Cancelar")
+                  child: const Text(StringsApp.CANCELAR)
               ),
 
               TextButton(
@@ -26,7 +27,7 @@ class ReturnGameDialogView{
                     onDone.call();
                     Navigator.of(_dialogContext!).pop();
                   },
-                  child: const Text("Aceptar")
+                  child: const Text(StringsApp.ACEPTAR)
               ),
             ],
           );

@@ -90,7 +90,7 @@ class BoardGameDetail extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
-                    StringsApp.OBSERVACIONES,
+                    StringsApp.OBSERVACIONES_,
                     style: TextStyle(fontSize: 24),
                   ),
                 ),

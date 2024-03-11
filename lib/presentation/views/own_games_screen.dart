@@ -44,9 +44,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), (){
-            print("Error al devolver el juego");
-          });
+          ErrorView.show(context, StringsApp.ERROR_DEVOLVER_JUEGO, (){});
           break;
       }
     });
@@ -65,8 +63,8 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
           break;
         case Status.ERROR:
           OverlayLoadingView.hide();
-          ErrorView.show(context, state.exception!.toString(), (){
-            print("Error al cargar los juegos prestados en pantalla de iphone");
+          ErrorView.show(context, StringsApp.ERROR_CARGAR_JUEGO_IPHONE, (){
+            _dropGameModelView.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
           });
           break;
       }
@@ -80,7 +78,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Juegos prestados"),
+        title: const Text(StringsApp.JUEGOS_PRESTADOS),
         centerTitle: true,
       ),
       body: SafeArea(
