@@ -49,7 +49,6 @@ class LentGameViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     getLentGameState.close();
     getBorrowedGameBoardState.close();
     setBorrowedGameState.close();

@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/login_screen/viewmodel/login_view_model.dart';
 import 'package:gremio_de_historias/presentation/widgets/commons/error_view.dart';
@@ -51,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               //Mostramos snackbar
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text("Credenciales incorrectas"),
+                    content: Text(StringsApp.ERROR_FIREBASE),
                     duration: Duration(seconds: 3),
                 )
               );
@@ -95,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             Image.asset("assets/images/logo_gremio.png"),
 
-            const Text("Asociación cultural", style: TextStyle(fontSize: 20),),
+            const Text(StringsApp.ASOCACION_CULTURAL,
+              style: TextStyle(fontSize: 20),),
 
             const SizedBox(
               height: 8,
@@ -115,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: EdgeInsets.all(8.0),
                           child: FaIcon(FontAwesomeIcons.user),
                         ),
-                        hintText: "Nombre de usuario",
+                        hintText: StringsApp.NOMBRE_USUARIO,
                         enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(0)
@@ -126,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       validator: (value){
                         if(value!.isEmpty){
-                          return "Campo obligatorio";
+                          return StringsApp.CAMPO_OBLIGATORIO;
                         }
 
                         return null;
@@ -156,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 icon: const FaIcon(FontAwesomeIcons.key),
                             ),
                           ),
-                          hintText: "Contraseña",
+                          hintText: StringsApp.PASSWORD,
                           enabledBorder: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                   Radius.circular(0)
@@ -167,7 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       validator: (value){
                         if(value!.isEmpty){
-                          return "Campo obligatorio";
+                          return StringsApp.CAMPO_OBLIGATORIO;
                         }
 
                         return null;

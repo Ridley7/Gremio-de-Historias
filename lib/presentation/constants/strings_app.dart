@@ -8,6 +8,7 @@ class StringsApp{
   static const String DETALLE = "Detalle";
   static const String JUEGOS_DISPONIBLES = "Juegos Disponibles";
   static const String DEVOLVER_JUEGO = "Devolver Juego";
+  static const String ASOCACION_CULTURAL = "Asociación cultural";
 
   //Error
   static const String ERROR_GUARDAR_JUEGOS = "Error al guardar los juegos que se prestan";
@@ -21,6 +22,7 @@ class StringsApp{
   static const String ERROR_CARGAR_JUEGO_IPHONE = "Error al cargar los juegos prestados en pantalla de iphone";
   static const String ERROR_CREDENCIALES_INCORRECTAS = "Credenciales incorrectas";
   static const String ERROR_FIREBASE = "Error con el logueo la base de datos";
+  static const String CAMPO_OBLIGATORIO = "Campo obligatorio";
 
   //Varios
   static const String NO_HAY_JUEGOS_PARA_DEVOLVER = "No tienes juegos en tu poder para devolver";
@@ -44,5 +46,7 @@ class StringsApp{
   static const String ERROR = "Error";
   static const String RETRY = "Retry";
   static const String INFORMACION = "Información";
+  static const String NOMBRE_USUARIO = "Nombre de usuario";
+  static const String PASSWORD = "Contraseña";
 
 }

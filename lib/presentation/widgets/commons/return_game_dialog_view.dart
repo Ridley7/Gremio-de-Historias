@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
+import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
 
 class ReturnGameDialogView{
   static BuildContext? _dialogContext;

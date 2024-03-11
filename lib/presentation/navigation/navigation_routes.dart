@@ -83,7 +83,6 @@ final GoRouter router =
                   ]),
 
               //Ruta para devolver juego
-
               GoRoute(
                   path: NavigationRoutes._IPHONE_DROP_BOARDGAME_PATH,
                   builder: (context, state) => const IPhoneDropGameScreen())

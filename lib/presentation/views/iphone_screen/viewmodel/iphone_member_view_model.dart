@@ -23,7 +23,6 @@ class IPhoneMemberViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     getIphoneMemberState.close();
   }
 }

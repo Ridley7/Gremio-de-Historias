@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
-import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
+import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
 
 class BoardGameListWidget extends StatefulWidget {
   BoardGameListWidget({

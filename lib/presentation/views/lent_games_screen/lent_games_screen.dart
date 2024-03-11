@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
-import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
+import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/lent_games_screen/viewmodel/lent_game_view_model.dart';
@@ -61,7 +61,6 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
         case Status.SUCCESS:
           OverlayLoadingView.hide();
           setState(() {
-            //Hacemos cosas
             listGamesInMyHouse = state.data!;
           });
           break;
@@ -108,58 +107,7 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           centerTitle: true,
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            //Si no hemos elegido ningun juego no hacemos nada
-            bool findedGame = false;
-            for (int i = 0, max = checkedList.length; i < max; i++) {
-              if (checkedList[i]) {
-                findedGame = true;
-                break;
-              }
-            }
-
-            if (!findedGame) {
-              InfoView.show(context, StringsApp.ERROR_SELECCION_AL_MENOS_UN_JUEGO);
-              return;
-            }
-
-            //Obtenemos los juegos que se van a prestar
-            //Para ello obtenemos todos los indices a true de checkedList
-            List<int> indexBoardgamesBorrowed =
-                List.generate(checkedList.length, (index) => index)
-                    .where((i) => checkedList[i])
-                    .toList();
-
-            //Ahora comprobamos que el usuario no pueda llevarse mas juegos de los que le corresponde
-            if (indexBoardgamesBorrowed.length > 1) {
-              InfoView.show(context, StringsApp.ERROR_RETIRAS_MAS_DE_UN_JUEGO);
-            } else {
-              //Ahora comprobamos la cantidad de juegos que va a retirar más los que ya tiene en su poder
-              //La cantidad de juegos que voy a retirar estan en indexBoardgamesBorrowed.length
-              //Y ahora obtengo los que tengo en mi poder
-
-              if (indexBoardgamesBorrowed.length + listGamesInMyHouse.length >
-                  1) {
-                InfoView.show(
-                    context, StringsApp.ERROR_MAS_DE_UN_JUEGO_EN_CASA);
-              } else {
-
-                //Una vez obtenidos los indices, seteamos la informacion de cada juego
-                List<BoardGame> boardgamesBorrowed = [];
-                indexBoardgamesBorrowed.forEach((element) {
-                  //Indicamos que el juego ha sido tomado y quien es la persona que lo ha tomado
-                  //Llamamos al provider para obtener la información del usuario
-                  boardGames[element].takenBy = memberProvider.getCurrentMember().name;
-                  boardGames[element].taken = true;
-                  boardgamesBorrowed.add(boardGames[element]);
-                });
-
-                //Aqui debemos comprobar cuantos juegos prestados tengo
-                //Si el usuario ha retirado 5 o menos juegos procedemos a actualizar la BD
-                _lentGameViewModel.putBorrowedGames(boardgamesBorrowed);
-              }
-            }
-          },
+          onPressed: _handleFloatingActionButton,
           child: const Icon(Icons.handshake_outlined),
         ),
         body: BoardGameListWidget(
@@ -167,6 +115,31 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           detailRoute: NavigationRoutes.BOARDGAME_DETAIL_ROUTE,
           checkedList: checkedList,
         ));
+  }
+
+  void _handleFloatingActionButton() {
+    final selectedGamesIndexes = checkedList.asMap().entries.where((entry) => entry.value).map((e) => e.key).toList();
+
+    if (selectedGamesIndexes.isEmpty) {
+      InfoView.show(context, StringsApp.ERROR_SELECCION_AL_MENOS_UN_JUEGO);
+      return;
+    }
+
+    if (selectedGamesIndexes.length > 1) {
+      InfoView.show(context, StringsApp.ERROR_RETIRAS_MAS_DE_UN_JUEGO);
+      return;
+    }
+
+    if (selectedGamesIndexes.length + listGamesInMyHouse.length > 1) {
+      InfoView.show(context, StringsApp.ERROR_MAS_DE_UN_JUEGO_EN_CASA);
+      return;
+    }
+
+    final selectedGame = boardGames[selectedGamesIndexes.first];
+    selectedGame.takenBy = memberProvider.getCurrentMember().name;
+    selectedGame.taken = true;
+
+    _lentGameViewModel.putBorrowedGames([selectedGame]);
   }
 
 /*

@@ -51,7 +51,6 @@ class IPhoneGameViewModel extends BaseViewModel {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     getIphoneBoardGameState.close();
     getIphoneBorrowedBoardGameState.close();
     setIphoneBorrowedGamesState.close();

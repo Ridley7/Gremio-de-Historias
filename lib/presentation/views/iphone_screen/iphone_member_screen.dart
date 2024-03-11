@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
-import 'package:gremio_de_historias/presentation/constants/StringsApp.dart';
+import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_member_view_model.dart';
@@ -81,10 +81,7 @@ class _IphoneMemberScreenState extends State<IphoneMemberScreen> {
                     return ListTile(
                       title: Text(members[index].name),
                       onTap: () {
-                        //Llamamos al proxy member provider
                         proxyMemberProvider.setProxyMember(members[index]);
-
-                        //Aqui necesitamos un provider
                         context.push(NavigationRoutes.IPHONE_SCREEN_MENU_ROUTE);
                       },
                     );
