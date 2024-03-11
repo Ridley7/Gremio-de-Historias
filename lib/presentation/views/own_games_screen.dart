@@ -19,6 +19,7 @@ class OwnGamesScreen extends StatefulWidget {
 class _OwnGamesScreenState extends State<OwnGamesScreen> {
 
   List<BoardGame> boardGames = [];
+
   final DropGameModelView _dropGameModelView = DropGameModelView();
 
   @override
