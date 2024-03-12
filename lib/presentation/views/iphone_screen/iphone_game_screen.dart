@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gremio_de_historias/di/app_modules.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
+import 'package:gremio_de_historias/presentation/constants/constants_app.dart';
 import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
 import 'package:gremio_de_historias/presentation/navigation/navigation_routes.dart';
 import 'package:gremio_de_historias/presentation/providers/proxy_member_provider.dart';
@@ -129,12 +130,12 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
       return;
     }
 
-    if (selectedGamesIndexes.length > 1) {
+    if (selectedGamesIndexes.length > ConstantsApp.ALLOWED_GAMES_IN_HOUSE) {
       InfoView.show(context, StringsApp.ERROR_RETIRAS_MAS_DE_UN_JUEGO);
       return;
     }
 
-    if (selectedGamesIndexes.length + listGamesInMyHouse.length > 1) {
+    if (selectedGamesIndexes.length + listGamesInMyHouse.length > ConstantsApp.ALLOWED_GAMES_IN_HOUSE) {
       InfoView.show(context, StringsApp.ERROR_MAS_DE_UN_JUEGO_EN_CASA);
       return;
     }
