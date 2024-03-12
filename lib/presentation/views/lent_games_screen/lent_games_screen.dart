@@ -140,10 +140,14 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       return;
     }
 
-    final selectedGame = boardGames[selectedGamesIndexes.first];
-    selectedGame.takenBy = memberProvider.getCurrentMember().name;
-    selectedGame.taken = true;
+    final gamesToBorrow = selectedGamesIndexes.map((index) {
+      final selectedGame = boardGames[index];
+      selectedGame.takenBy = memberProvider.getCurrentMember().name;
+      selectedGame.taken = true;
+      return selectedGame;
+    }).toList();
 
-    _lentGameViewModel.putBorrowedGames([selectedGame]);
+    _lentGameViewModel.putBorrowedGames(gamesToBorrow);
+
   }
 }

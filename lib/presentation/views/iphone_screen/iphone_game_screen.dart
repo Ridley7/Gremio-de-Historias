@@ -140,11 +140,15 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
       return;
     }
 
-    final selectedGame = boardGames[selectedGamesIndexes.first];
-    selectedGame.takenBy = proxyMemberProvider.getProxyMember().name;
-    selectedGame.taken = true;
+    final gamesToBorrow = selectedGamesIndexes.map((index) {
+      final selectedGame = boardGames[index];
+      selectedGame.takenBy = proxyMemberProvider.getProxyMember().name;
+      selectedGame.taken = true;
+      return selectedGame;
+    }).toList();
 
-    _iPhoneGameViewModel.putBorrowedGames([selectedGame]);
+    _iPhoneGameViewModel.putBorrowedGames(gamesToBorrow);
+
   }
 
 
