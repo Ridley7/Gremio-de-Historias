@@ -1,4 +1,6 @@
 
+import 'package:gremio_de_historias/presentation/constants/constants_app.dart';
+
 class StringsApp{
 
   //Titulos de pantallas
@@ -15,8 +17,8 @@ class StringsApp{
   static const String ERROR_OBTENER_JUEGOS_POR_USUARIO = "Error al obtener los juegos en poder del usuario";
   static const String ERROR_OBTENER_TODOS_JUEGOS = "Error al obtener todos los juegos de la BD";
   static const String ERROR_SELECCION_AL_MENOS_UN_JUEGO = "Elija al menos un juego";
-  static const String ERROR_RETIRAS_MAS_DE_UN_JUEGO = "No puedes retirar mas de 1 juego";
-  static const String ERROR_MAS_DE_UN_JUEGO_EN_CASA = "No puedes tener más de 1 juego en tu poder";
+  static const String ERROR_RETIRAS_MAS_DE_UN_JUEGO = "No puedes retirar mas de ${ConstantsApp.ALLOWED_GAMES_IN_HOUSE} juegos";
+  static const String ERROR_MAS_DE_UN_JUEGO_EN_CASA = "No puedes tener más de ${ConstantsApp.ALLOWED_GAMES_IN_HOUSE} juegos en tu poder";
   static const String ERROR_OBTENER_MIEMBROS = "Error al obtener los usuarios";
   static const String ERROR_DEVOLVER_JUEGO = "Error al devolver el juego";
   static const String ERROR_CARGAR_JUEGO_IPHONE = "Error al cargar los juegos prestados en pantalla de iphone";
