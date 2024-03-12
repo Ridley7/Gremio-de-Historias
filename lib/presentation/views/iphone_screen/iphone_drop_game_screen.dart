@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/di/app_modules.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
@@ -18,7 +19,7 @@ class IPhoneDropGameScreen extends StatefulWidget {
 
 class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
   List<BoardGame> boardGames = [];
-  final DropGameModelView _dropGameModelView = DropGameModelView();
+  final DropGameModelView _dropGameModelView = inject<DropGameModelView>();
 
   @override
   void initState() {
@@ -68,8 +69,7 @@ class _IPhoneDropGameScreenState extends State<IPhoneDropGameScreen> {
       }
     });
 
-    _dropGameModelView
-        .fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
+    _dropGameModelView.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
   }
 
   @override

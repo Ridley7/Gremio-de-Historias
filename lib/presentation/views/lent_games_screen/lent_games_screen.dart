@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/di/app_modules.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
@@ -19,7 +20,7 @@ class LentGamesScreen extends StatefulWidget {
 }
 
 class _LentGamesScreenState extends State<LentGamesScreen> {
-  final LentGameViewModel _lentGameViewModel = LentGameViewModel();
+  final LentGameViewModel _lentGameViewModel = inject<LentGameViewModel>();
   List<BoardGame> boardGames = [];
   List<bool> checkedList = [];
   DateTime? selectedDate;

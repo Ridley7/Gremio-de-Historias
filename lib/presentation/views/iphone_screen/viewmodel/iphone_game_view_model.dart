@@ -6,7 +6,7 @@ import 'package:gremio_de_historias/presentation/base/base_view_model.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 
 class IPhoneGameViewModel extends BaseViewModel {
-  final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+  final BoardgameRepository _boardgamesRepository;
   final StreamController<ResourceState<List<BoardGame>>>
       getIphoneBoardGameState = StreamController();
   final StreamController<ResourceState<List<BoardGame>>>
@@ -14,7 +14,10 @@ class IPhoneGameViewModel extends BaseViewModel {
   final StreamController<ResourceState<void>> setIphoneBorrowedGamesState =
       StreamController();
 
-  //Aqui falta un constructor para meter di
+  IPhoneGameViewModel({
+    required BoardgameRepository boardgamesRepository
+  }) : _boardgamesRepository = boardgamesRepository;
+
 
   putBorrowedGames(List<BoardGame> borrowedGames) {
     setIphoneBorrowedGamesState.add(ResourceState.loading());

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gremio_de_historias/di/app_modules.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
@@ -19,7 +20,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  final LoginViewModel _loginViewModel = LoginViewModel();
+
+  final LoginViewModel _loginViewModel = inject<LoginViewModel>();
 
   String usernamePreferences = "";
   String passPreferences = "";

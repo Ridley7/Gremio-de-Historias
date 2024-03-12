@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gremio_de_historias/di/app_modules.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
@@ -25,10 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controllerPassMember = TextEditingController();
   bool viewPassword = true;
   Member? miembro;
-  
-  //MembersRepository _membersRepository = MembersRepository();
-  //final LoginViewModel _loginViewModel = LoginViewModel(membersRepository: _membersRepository);
-  final LoginViewModel _loginViewModel = LoginViewModel();
+
+  final LoginViewModel _loginViewModel = inject<LoginViewModel>();
   String usernamePreferences = "";
   String passPreferences = "";
 

@@ -6,9 +6,13 @@ import 'package:gremio_de_historias/presentation/base/base_view_model.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 
 class IPhoneMemberViewModel extends BaseViewModel {
-  final MembersRepository _membersRepository = MembersRepository();
+  final MembersRepository _membersRepository;
   final StreamController<ResourceState<List<Member>>> getIphoneMemberState =
       StreamController();
+
+  IPhoneMemberViewModel({
+    required MembersRepository membersRepository
+  }) : _membersRepository = membersRepository;
 
   //Aqui falta un constructor para meter di
   fetchMembers() {

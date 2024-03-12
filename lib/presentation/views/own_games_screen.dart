@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gremio_de_historias/di/app_modules.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 import 'package:gremio_de_historias/presentation/constants/strings_app.dart';
@@ -20,7 +21,7 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
 
   List<BoardGame> boardGames = [];
 
-  final DropGameModelView _dropGameModelView = DropGameModelView();
+  final DropGameModelView _dropGameModelView = inject<DropGameModelView>();
 
   @override
   void initState() {
@@ -28,8 +29,6 @@ class _OwnGamesScreenState extends State<OwnGamesScreen> {
     super.initState();
 
     final memberProvider = context.read<MemberProvider>();
-
-    //PORQUE HAY DOS STREAMS AQUI!! REVISAR
 
     _dropGameModelView.setBorrowedGameState.stream.listen((state) {
       switch(state.status){

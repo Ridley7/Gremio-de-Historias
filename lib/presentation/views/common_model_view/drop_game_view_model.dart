@@ -6,13 +6,17 @@ import 'package:gremio_de_historias/presentation/base/base_view_model.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 
 class DropGameModelView extends BaseViewModel {
-  final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+  final BoardgameRepository _boardgamesRepository;
   final StreamController<ResourceState<List<BoardGame>>>
       getBorrowedGameBoardState = StreamController();
   final StreamController<ResourceState<void>> setBorrowedGameState =
       StreamController();
 
-  //Aqui falta un constructor para meter di
+  DropGameModelView({
+    required BoardgameRepository boardgamesRepository
+  }) : _boardgamesRepository = boardgamesRepository;
+
+
 
   returnBorrowedGame(BoardGame boardGame) {
     setBorrowedGameState.add(ResourceState.loading());

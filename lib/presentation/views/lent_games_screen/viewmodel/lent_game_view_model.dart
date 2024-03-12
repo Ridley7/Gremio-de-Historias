@@ -6,7 +6,7 @@ import 'package:gremio_de_historias/presentation/base/base_view_model.dart';
 import 'package:gremio_de_historias/models/resource_state.dart';
 
 class LentGameViewModel extends BaseViewModel {
-  final BoardgamesRepository _boardgamesRepository = BoardgamesRepository();
+  final BoardgameRepository _boardgamesRepository;
   final StreamController<ResourceState<List<BoardGame>>> getLentGameState =
       StreamController();
   final StreamController<ResourceState<List<BoardGame>>>
@@ -14,7 +14,10 @@ class LentGameViewModel extends BaseViewModel {
   final StreamController<ResourceState<void>> setBorrowedGameState =
       StreamController();
 
-  //Aqui falta un constructor para meter di
+  LentGameViewModel({
+    required BoardgameRepository boardgamesRepository})
+      : _boardgamesRepository = boardgamesRepository;
+
 
   putBorrowedGames(List<BoardGame> borrowedGames) {
     setBorrowedGameState.add(ResourceState.loading());
