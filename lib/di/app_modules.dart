@@ -15,7 +15,12 @@ import 'package:gremio_de_historias/data/remote/network_client.dart';
 import 'package:gremio_de_historias/data/splash_screen/remote/splash_screen_data_implementation.dart';
 import 'package:gremio_de_historias/data/splash_screen/splash_screen_remote_implementation.dart';
 import 'package:gremio_de_historias/domain/boardgames_repository.dart';
+import 'package:gremio_de_historias/domain/iphone_drop_game_repository.dart';
+import 'package:gremio_de_historias/domain/iphone_game_screen_repository.dart';
+import 'package:gremio_de_historias/domain/login_repository.dart';
 import 'package:gremio_de_historias/domain/members_repository.dart';
+import 'package:gremio_de_historias/domain/own_games_repository.dart';
+import 'package:gremio_de_historias/domain/splash_screen_repository.dart';
 import 'package:gremio_de_historias/presentation/views/common_model_view/drop_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_game_view_model.dart';
 import 'package:gremio_de_historias/presentation/views/iphone_screen/viewmodel/iphone_member_view_model.dart';
@@ -38,7 +43,7 @@ class AppModules{
 
   _setupIphoneGameScreen(){
     inject.registerFactory(() => IPhoneGamesScreenRemoteImplementation(networkClient: inject.get()));
-    inject.registerFactory<BoardgameRepository>(() => IPhoneGamesScreenDataImplementation(remoteImplementation: inject.get()));
+    inject.registerFactory<IPhoneGameScreenRepository>(() => IPhoneGamesScreenDataImplementation(remoteImplementation: inject.get()));
     inject.registerFactory(() => IPhoneGameViewModel(boardgamesRepository: inject.get()));
   }
 
@@ -50,31 +55,31 @@ class AppModules{
 
   _setupIphoneDropGameScreen(){
     inject.registerFactory(() => IphoneDropGameRemoteImplementation(networkClient: inject.get()));
-    inject.registerFactory(() => IphoneDropGameDataImplementation(remoteImplementation: inject.get()));
+    inject.registerFactory<IPhoneDropGameRepository>(() => IphoneDropGameDataImplementation(remoteImplementation: inject.get()));
     inject.registerFactory(() => DropGameModelView(boardgamesRepository: inject.get()));
   }
 
   _setupLentGameScreen(){
     inject.registerFactory(() => LentGamesRemoteImplementation(networkClient: inject.get()));
-    inject.registerFactory(() => LentGamesDataImplementation(remoteImplementation: inject.get()));
+    inject.registerFactory<BoardgameRepository>(() => LentGamesDataImplementation(remoteImplementation: inject.get()));
     inject.registerFactory(() => LentGameViewModel(boardgamesRepository: inject.get()));
   }
 
   _setupLoginScreen(){
     inject.registerFactory(() => LoginRemoteImplementation(networkClient: inject.get()));
-    inject.registerFactory(() => LoginDataImplementation(remoteImplementation: inject.get()));
+    inject.registerFactory<LoginRepository>(() => LoginDataImplementation(remoteImplementation: inject.get()));
     inject.registerFactory(() => LoginViewModel(membersRepository: inject.get()));
   }
   
   _setupSplashScreen(){
     inject.registerFactory(() => SplashScreenRemoteImplementation(networkClient: inject.get()));
-    inject.registerFactory(() => SplashScreenDataImplementation(remoteImplementation: inject.get()));
+    inject.registerFactory<SplashScreenRepository>(() => SplashScreenDataImplementation(remoteImplementation: inject.get()));
     //inject.registerFactory(() => LoginViewModel(membersRepository: inject.get()));
   }
 
   _setupOwnGamesScreen(){
     inject.registerFactory(() => OwnGamesRemoteImplementation(networkClient: inject.get()));
-    inject.registerFactory(() => OwnGamesDataImplementation(remoteImplementation: inject.get()));
+    inject.registerFactory<OwnGamesRepository>(() => OwnGamesDataImplementation(remoteImplementation: inject.get()));
     //inject.registerFactory(() => DropGameModelView(boardgamesRepository: inject.get()));
   }
 

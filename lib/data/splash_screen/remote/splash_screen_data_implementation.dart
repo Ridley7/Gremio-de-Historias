@@ -1,8 +1,8 @@
 import 'package:gremio_de_historias/data/splash_screen/splash_screen_remote_implementation.dart';
-import 'package:gremio_de_historias/domain/members_repository.dart';
+import 'package:gremio_de_historias/domain/splash_screen_repository.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 
-class SplashScreenDataImplementation extends MembersRepository{
+class SplashScreenDataImplementation extends SplashScreenRepository{
 
   final SplashScreenRemoteImplementation _remoteImplementation;
 
@@ -15,10 +15,5 @@ class SplashScreenDataImplementation extends MembersRepository{
     return _remoteImplementation.loginMember(user, pass);
   }
 
-  @override
-  Future<List<Member>> getMembers() {
-    // TODO: implement getMembers
-    throw UnimplementedError();
-  }
 
 }

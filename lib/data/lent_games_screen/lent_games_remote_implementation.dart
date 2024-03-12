@@ -67,6 +67,15 @@ class LentGamesRemoteImplementation {
     }
   }
 
+  //Metodo para devolver un juego
+  Future<void> returnBorrowedGame(BoardGame boardGame) async{
+    try{
+      await _networkClient.db.collection("boardgames").doc(boardGame.id).set(boardGame.toJson());
+    }catch(error){
+      throw RemoteErrorMapper.getException(error);
+    }
+  }
+
 
 
 

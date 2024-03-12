@@ -1,8 +1,8 @@
 import 'package:gremio_de_historias/data/login_screen/login_remote_implementation.dart';
-import 'package:gremio_de_historias/domain/members_repository.dart';
+import 'package:gremio_de_historias/domain/login_repository.dart';
 import 'package:gremio_de_historias/models/login_screen/member.dart';
 
-class LoginDataImplementation extends MembersRepository{
+class LoginDataImplementation extends LoginRepository{
 
   final LoginRemoteImplementation _remoteImplementation;
 
@@ -13,12 +13,6 @@ class LoginDataImplementation extends MembersRepository{
   @override
   Future<Member?> loginMember(String user, String pass) {
     return _remoteImplementation.loginMember(user, pass);
-  }
-
-  @override
-  Future<List<Member>> getMembers() {
-    // TODO: implement getMembers
-    throw UnimplementedError();
   }
 
 }

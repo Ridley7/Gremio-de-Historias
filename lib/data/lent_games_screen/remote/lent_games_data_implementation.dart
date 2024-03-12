@@ -30,7 +30,7 @@ class LentGamesDataImplementation extends BoardgameRepository{
   @override
   Future<void> returnBorrowedGame(BoardGame boardGame) {
     // TODO: implement returnBorrowedGame
-    throw UnimplementedError();
+    return _remoteImplementation.returnBorrowedGame(boardGame);
   }
 
 

@@ -1,8 +1,8 @@
 import 'package:gremio_de_historias/data/iphone_screen/iphone_drop_game_remote_implementation.dart';
-import 'package:gremio_de_historias/domain/boardgames_repository.dart';
+import 'package:gremio_de_historias/domain/iphone_drop_game_repository.dart';
 import 'package:gremio_de_historias/models/lent_game_screen/board_game.dart';
 
-class IphoneDropGameDataImplementation extends BoardgameRepository{
+class IphoneDropGameDataImplementation extends IPhoneDropGameRepository{
 
   final IphoneDropGameRemoteImplementation _remoteImplementation;
 
@@ -19,21 +19,5 @@ class IphoneDropGameDataImplementation extends BoardgameRepository{
   Future<List<BoardGame>> getBorrowedBoardGames(String memberName) {
     return _remoteImplementation.getBorrowedBoardGames(memberName);
   }
-
-  @override
-  Future<List<BoardGame>> getBoardGames() {
-    // TODO: implement getBoardGames
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> setBorrowedGames(List<BoardGame> borrowedGames) {
-    // TODO: implement setBorrowedGames
-    throw UnimplementedError();
-  }
-
-
-
-
 
 }
