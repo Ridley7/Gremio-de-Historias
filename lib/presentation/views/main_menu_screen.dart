@@ -19,7 +19,7 @@ class MainMenuScreen extends StatelessWidget {
         access: 1),
     ItemMainMenu(
         iconItem: "assets/icons/my_games.png",
-        titleItem: StringsApp.PRESTAMO,
+        titleItem: StringsApp.DEVOLUCION,
         route: "/owngames",
         access: 1),
     ItemMainMenu(

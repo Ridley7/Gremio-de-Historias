@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
               //Mostramos snackbar
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
-                    content: Text(StringsApp.ERROR_FIREBASE),
+                    content: Text(StringsApp.ERROR_CREDENCIALES_INCORRECTAS),
                     duration: Duration(seconds: 3),
                 )
               );
