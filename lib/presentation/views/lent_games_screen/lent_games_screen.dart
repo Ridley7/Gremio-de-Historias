@@ -45,6 +45,9 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
           InfoView.show(context, StringsApp.JUEGO_RETIRADO);
           setState(() {
             _lentGameViewModel.fetchBoardGames();
+            //Comprobamos los juegos que hay en casa, por que si el usuario quiere pedir los
+            //juegos de uno en uno, nos revienta.
+            _lentGameViewModel.fetchBorrowedBoardGames(memberProvider.getCurrentMember().name);
           });
           break;
         case Status.ERROR:
@@ -131,6 +134,8 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
       return;
     }
 
+    print("Juegos en casa: " + listGamesInMyHouse.length.toString());
+
     if (selectedGamesIndexes.length + listGamesInMyHouse.length > 1) {
       InfoView.show(context, StringsApp.ERROR_MAS_DE_UN_JUEGO_EN_CASA);
       return;
@@ -142,23 +147,4 @@ class _LentGamesScreenState extends State<LentGamesScreen> {
 
     _lentGameViewModel.putBorrowedGames([selectedGame]);
   }
-
-/*
-  Future<void> _selectDate(BuildContext context) async{
-    final DateTime? picked = await showDatePicker(
-        context: context,
-        locale: const Locale("es", "ES"),
-        helpText: "Seleccione la fecha de devolución",
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now().subtract(const Duration(days: 30)),
-        lastDate: DateTime.now().add(const Duration(days: 30))
-    );
-
-    if(picked != null && picked != selectedDate){
-      setState(() {
-        selectedDate = picked!;
-      });
-    }
-  }
-  */
 }

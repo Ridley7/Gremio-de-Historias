@@ -47,6 +47,7 @@ class _IPhoneGameScreenState extends State<IPhoneGameScreen> {
           InfoView.show(context, StringsApp.JUEGO_RETIRADO);
           setState(() {
             _iPhoneGameViewModel.fetchBoardGames();
+            _iPhoneGameViewModel.fetchBorrowedBoardGames(proxyMemberProvider.getProxyMember().name);
           });
           break;
         case Status.ERROR:
