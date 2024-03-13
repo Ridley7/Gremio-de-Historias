@@ -1,4 +1,4 @@
-package com.example.gremio_de_historias
+package com.gremiodehistorias.appoficial
 
 import io.flutter.embedding.android.FlutterActivity
 
