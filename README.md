@@ -10,3 +10,5 @@ Para cambiar el icono de la aplicacion
 
 flutter pub run flutter_launcher_icons
 
+Android AAB
+flutter build appbundle
